@@ -2,6 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import React, { Component, useState } from "react";
 import { View, Text, Image, StatusBar } from "react-native";
 import AppIntroSlider from "react-native-app-intro-slider";
+import LottieView from "lottie-react-native";
 import { COLORS, SIZES } from "../constants/themes";
 
 const slides = [
@@ -9,25 +10,26 @@ const slides = [
     id: 1,
     title: "Bine ai venit",
     description: "Orare UPT este aplicatia perfecta pentru studenti ",
-    image: require("../assets/Images/AppIcon.png"),
+    animation: require("../assets/Animations/OnBoardingAnimationPage1.json")
   },
   {
     id: 2,
     title: "Verifica-ti orarul",
     description:
       "Primeste notificari despre cursurile din ziua curenta si in ce sala se tin ele si fii mereu la curent cu orarul",
-    image: require("../assets/Images/AppIcon.png"),
+    animation: require("../assets/Animations/OnBoardingAnimationPage2.json")
   },
   {
     id: 3,
     title: "Hai sa incepem",
     description:
       "Pentru a începe să folosești aplicația, autentifică-te cu contul de student",
-    image: require("../assets/Images/AppIcon.png"),
+    animation: require("../assets/Animations/OnBoardingAnimationPage3.json")
   },
 ];
 
 const OnBoardingScreen = () => {
+
   const navigate = useNavigation();
 
   buttonLabel = (label) => {
@@ -62,18 +64,21 @@ const OnBoardingScreen = () => {
               paddingTop: 100,
             }}
           >
-            <Image
-              source={item.image}
+            <LottieView
+              source={item.animation}
               style={{
-                width: SIZES.width - 200,
-                height: 400,
+                width: SIZES.width - 500,
+                height: 300,
               }}
               resizeMode="contain"
+              autoPlay
+              loo
             />
             <Text
               style={{
                 fontWeight: "bold",
                 color: COLORS.title,
+                paddingTop: 45,
                 fontSize: 35,
               }}
             >
@@ -82,7 +87,7 @@ const OnBoardingScreen = () => {
             <Text
               style={{
                 textAlign: "center",
-                paddingTop: 5,
+                paddingTop: 9,
                 color: COLORS.title,
               }}
             >
@@ -100,7 +105,7 @@ const OnBoardingScreen = () => {
       renderSkipButton={() => this.buttonLabel("Skip")}
       renderDoneButton={() => this.buttonLabel("Done")}
       onDone={() => {
-        navigate.replace("LoginScreen");
+        navigate.replace("Pre-Login");
       }}
     />
   );
