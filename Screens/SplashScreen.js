@@ -32,8 +32,8 @@ const SplashScreen = () => {
   }, [playCount]);
 
   const handleAnimationFinish = () => {
-    navigation.replace('OnBoardingScreen')
-   // navigation.navigate("OnBoardingScreen");
+    navigation.replace("Getting Started");
+    // navigation.navigate("OnBoardingScreen");
   };
 
   return (
