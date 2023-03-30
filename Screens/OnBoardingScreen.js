@@ -72,7 +72,7 @@ const OnBoardingScreen = () => {
               }}
               resizeMode="contain"
               autoPlay
-              loo
+              loop
             />
             <Text
               style={{
@@ -105,7 +105,7 @@ const OnBoardingScreen = () => {
       renderSkipButton={() => this.buttonLabel("Skip")}
       renderDoneButton={() => this.buttonLabel("Done")}
       onDone={() => {
-        navigate.replace("Pre-Login");
+        navigate.replace("PreLogin");
       }}
     />
   );
