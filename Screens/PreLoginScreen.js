@@ -49,7 +49,9 @@ const LoginScreen = () => {
 
       <Text style={{ marginTop: -40 }}>sau</Text>
 
+
       <View style={styles.lineStyle2} />
+      
       <TouchableOpacity onPress={() => navigation.navigate("Login")}>
         <Button style={styles.button}>Conecteaza-te cu email</Button>
       </TouchableOpacity>

@@ -8,7 +8,7 @@ import {
   Image,
   Keyboard,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/AntDesign";
 import EntypoIcon from "react-native-vector-icons/Entypo";
@@ -16,9 +16,11 @@ import { useNavigation } from "@react-navigation/native";
 import { Input } from "@ui-kitten/components";
 import { Button } from "@ui-kitten/components/ui";
 import { SafeAreaView } from "react-native-safe-area-context";
+import LottieView from "lottie-react-native";
 import GoogleSVG from "../assets/Images/GoogleLogo.svg";
 import FacebookSVG from "../assets/Images/FacebookLogo.svg";
 import AppleSVG from "../assets/Images/AppleLogo.svg";
+import { SIZES } from "../constants/themes";
 
 const RegisterByEmailScreen = () => {
   const navigation = useNavigation();
@@ -39,6 +41,26 @@ const RegisterByEmailScreen = () => {
 
   const EmailIcon = () => <Icon name="mail" size={25} color="black" />;
 
+  const animation = {
+    animation2: require("../assets/Animations/SuccessAnimation.json"),
+  };
+
+  const VerifiedIcon = () => (
+    <LottieView
+      source={require("../assets/Animations/SuccessAnimation.json")}
+      style={{
+        width: 34,
+        height: 34,
+      }}
+      loop="false"
+      autoPlay="true"
+      resizeMode="containted"
+    />
+  );
+
+  const [email, setEmail] = useState("");
+  const isStudentEmail = email.endsWith("@student.upt.ro");
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
@@ -46,12 +68,14 @@ const RegisterByEmailScreen = () => {
           <Icon name="arrowleft" size={30} color="black" style={styles.icon} />
         </TouchableOpacity>
         <Text style={styles.headerText}>Creeaza contul tau</Text>
-
         <View style={styles.TextInputView1}>
           <Input
             placeholder="Email"
             size="large"
+            value={email}
+            onChangeText={setEmail}
             accessoryLeft={EmailIcon}
+            accessoryRight={isStudentEmail && VerifiedIcon}
             textStyle={{ fontSize: 15 }}
             style={{
               width: 330,
@@ -60,7 +84,6 @@ const RegisterByEmailScreen = () => {
             }}
           />
         </View>
-
         <View style={styles.TextInputView2}>
           <Input
             placeholder="Parola"
@@ -78,7 +101,15 @@ const RegisterByEmailScreen = () => {
         </View>
 
         <SafeAreaView style={{ alignItems: "center" }}>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              if (isStudentEmail) {
+                console.log(isStudentEmail, showVerifiedIcon);
+                setShowVerifiedIcon(true);
+                console.log(showVerifiedIcon);
+              }
+            }}
+          >
             <Button style={styles.button}>Inregistreaza-te</Button>
           </TouchableOpacity>
         </SafeAreaView>
@@ -143,14 +174,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
-    
   },
   icon: {
     justifyContent: "flex-end",
     alignContent: "flex-end",
     marginTop: StatusBar.currentHeight + 60,
     marginLeft: 10,
-    width:40,
+    width: 40,
   },
   headerText: {
     fontSize: 35,

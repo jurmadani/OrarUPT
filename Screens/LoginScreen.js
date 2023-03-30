@@ -91,7 +91,7 @@ const LoginScreen = () => {
         <Button style={styles.button}>Conecteaza-te</Button>
       </TouchableOpacity>
 
-      <Button appearance="ghost" style={{ marginBottom: 30 }}>
+      <Button appearance="ghost" style={{ marginBottom: 120 }}>
         Ai uitat parola?
       </Button>
     </SafeAreaView>
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: 340,
     height: 60,
-    marginTop: 30,
+    marginTop: 5,
     borderWidth: 1,
   },
   TextInputView2: {
@@ -144,11 +144,11 @@ const styles = StyleSheet.create({
     width: 340,
     height: 60,
     marginTop: 10,
-    marginBottom: 60,
+    marginBottom: 120,
     borderWidth: 1,
   },
   button: {
-    marginBottom: 60,
+    marginBottom: 20,
     width: 300,
     height: 50,
     backgroundColor: "#2E3192",
