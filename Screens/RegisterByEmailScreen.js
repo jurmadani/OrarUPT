@@ -23,40 +23,42 @@ import { Input } from "@ui-kitten/components";
 import { useEffect } from "react";
 
 const RegisterByEmailScreen = () => {
-  const VerifiedIcon = (props) => (
-    <LottieView
-      source={require("../assets/Animations/SuccessAnimation.json")}
-      style={{
-        width: 34,
-        height: 34,
-      }}
-      loop="false"
-      autoPlay="false"
-      resizeMode="contain"
-    />
-  );
-
   const navigation = useNavigation();
-
+  const [email, setEmail] = useState("");
+  const [isStudent, setIsStudent] = useState(false);
   const [secureTextEntry, setSecureTextEntry] = React.useState(true);
+  const [emailViewStyle, setEmailViewStyle] = useState(styles.TextInputView1);
+  const [isRegisterButtonPressed, setRegisterButtonPressed] = useState(false);
+
+  const VerifiedIcon = (boolean) => (
+    <View>
+      <LottieView
+        source={require("../assets/Animations/SuccessAnimation.json")}
+        style={{
+          width: boolean ? 34 : 0, // set a default width of 0 when isStudent is false
+          height: boolean ? 34 : 0, // set a default height of 0 when isStudent is false
+          marginLeft:1,
+          marginTop:-1
+        }}
+        loop={false}
+        autoSize="true"
+        autoPlay={boolean ? "true" : "false"}
+        resizeMode="contain"
+      />
+    </View>
+  );
+  const renderIcon = React.memo(() => (
+    <TouchableWithoutFeedback onPress={toggleSecureEntry}>
+      <EntypoIcon name={secureTextEntry ? "eye-with-line" : "eye"} size={20} />
+    </TouchableWithoutFeedback>
+  ));
 
   const toggleSecureEntry = () => {
     setSecureTextEntry(!secureTextEntry);
   };
-
-  const renderIcon = () => (
-    <TouchableWithoutFeedback onPress={toggleSecureEntry}>
-      <EntypoIcon name={secureTextEntry ? "eye-with-line" : "eye"} size={20} />
-    </TouchableWithoutFeedback>
-  );
-
   const PasswordIcon = () => <Icon name="lock" size={30} color="black" />;
 
   const EmailIcon = () => <Icon name="mail" size={25} color="black" />;
-
-  const [email, setEmail] = useState("");
-
-  const [isStudent, setIsStudent] = useState(false);
 
   const checkIfEmailIsStudentEmail = (email) => {
     setIsStudent(email.endsWith("@student.upt.ro"));
@@ -66,9 +68,6 @@ const RegisterByEmailScreen = () => {
   useEffect(() => {
     checkIfEmailIsStudentEmail(email);
   }, [email]);
-
-  const [emailViewStyle, setEmailViewStyle] = useState(styles.TextInputView1);
-  const [isRegisterButtonPressed, setRegisterButtonPressed] = useState(false);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -88,7 +87,7 @@ const RegisterByEmailScreen = () => {
             }}
             accessoryLeft={EmailIcon}
             accessoryRight={
-              isStudent ? VerifiedIcon : null // conditionally render the VerifiedIcon component
+              isStudent ? VerifiedIcon(isStudent) : null // conditionally render the VerifiedIcon component
             }
             textStyle={{ fontSize: 15 }}
             style={{
