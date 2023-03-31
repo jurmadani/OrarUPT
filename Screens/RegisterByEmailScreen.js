@@ -21,10 +21,14 @@ import FacebookSVG from "../assets/Images/FacebookLogo.svg";
 import AppleSVG from "../assets/Images/AppleLogo.svg";
 import { Input } from "@ui-kitten/components";
 import { useEffect } from "react";
+import { KeyboardAvoidingView } from "native-base";
+import useAuth from "../hooks/useAuth";
 
 const RegisterByEmailScreen = () => {
   const navigation = useNavigation();
+  const { register } = useAuth();
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [isStudent, setIsStudent] = useState(false);
   const [secureTextEntry, setSecureTextEntry] = React.useState(true);
   const [emailViewStyle, setEmailViewStyle] = useState(styles.TextInputView1);
@@ -37,8 +41,8 @@ const RegisterByEmailScreen = () => {
         style={{
           width: boolean ? 34 : 0, // set a default width of 0 when isStudent is false
           height: boolean ? 34 : 0, // set a default height of 0 when isStudent is false
-          marginLeft:1,
-          marginTop:-1
+          marginLeft: 1,
+          marginTop: -1,
         }}
         loop={false}
         autoSize="true"
@@ -108,6 +112,10 @@ const RegisterByEmailScreen = () => {
           <Input
             placeholder="Parola"
             size="large"
+            value={password}
+            onChangeText={(text) => {
+              setPassword(text);
+            }}
             accessoryRight={renderIcon}
             accessoryLeft={PasswordIcon}
             secureTextEntry={secureTextEntry}
@@ -128,6 +136,7 @@ const RegisterByEmailScreen = () => {
                 setRegisterButtonPressed(true);
               } else {
                 setEmailViewStyle(styles.TextInputView1);
+                register(email, password);
               }
             }}
           >
@@ -287,8 +296,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: "#eee",
     marginTop: 50,
-    marginLeft: 23,
-    marginRight: 23,
+    marginLeft: 12,
+    marginRight: 12,
   },
   svgIconStyle: {
     height: 27,

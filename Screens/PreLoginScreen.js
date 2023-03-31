@@ -6,6 +6,7 @@ import FacebookSVG from "../assets/Images/FacebookLogo.svg";
 import AppleSVG from "../assets/Images/AppleLogo.svg";
 import { Button } from "@ui-kitten/components/ui";
 import { useNavigation } from "@react-navigation/native";
+import useAuth from "../hooks/useAuth";
 
 const LoginScreen = () => {
   const navigation = useNavigation();
@@ -44,18 +45,16 @@ const LoginScreen = () => {
         />
         <Text style={styles.svgText}>Continua cu Apple</Text>
       </TouchableOpacity>
- 
+
       <View style={styles.lineStyle1} />
 
       <Text style={{ marginTop: -40 }}>sau</Text>
 
-
       <View style={styles.lineStyle2} />
-      
+
       <TouchableOpacity onPress={() => navigation.navigate("Login")}>
         <Button style={styles.button}>Conecteaza-te cu email</Button>
       </TouchableOpacity>
-
 
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <Text style={styles.footerText}>Nu ai un cont?</Text>
