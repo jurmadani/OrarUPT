@@ -1,5 +1,54 @@
-1)register by email page:
-  
-    -need to change inputs or find a way to style item
+1)make the registerscreenbyemail work and add animations
 2)add logic to the register buttons/login
 3)create more figma designs to have a starting-point
+
+
+<View style={styles.container}>
+      <Image
+        source={require("../assets/Images/AppIcon.png")}
+        style={styles.AppIconStyle}
+      />
+      <Text style={styles.headerText}>CONECTEAZA-TE CU CONTUL DE STUDENT</Text>
+
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.container}
+      >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={styles.inner}>
+            <Input
+              placeholder="Email"
+              size="large"
+              accessoryLeft={EmailIcon}
+              textStyle={{ fontSize: 15 }}
+              style={{
+                width: 330,
+                borderWidth: 0,
+                backgroundColor: "transparent",
+              }}
+            />
+            <Input
+              placeholder="Parola"
+              size="large"
+              accessoryRight={renderIcon}
+              accessoryLeft={PasswordIcon}
+              secureTextEntry={secureTextEntry}
+              textStyle={{ fontSize: 15 }}
+              style={{
+                width: 330,
+                borderWidth: 0,
+                backgroundColor: "transparent",
+              }}
+            />
+          </View>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
+
+      <TouchableOpacity>
+        <Button style={styles.button}>Conecteaza-te</Button>
+      </TouchableOpacity>
+
+      <Button appearance="ghost" style={{ marginTop: 20 }}>
+        Ai uitat parola?
+      </Button>
+    </View>

@@ -13,16 +13,29 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/AntDesign";
 import EntypoIcon from "react-native-vector-icons/Entypo";
 import { useNavigation } from "@react-navigation/native";
-import { Input } from "@ui-kitten/components";
 import { Button } from "@ui-kitten/components/ui";
 import { SafeAreaView } from "react-native-safe-area-context";
 import LottieView from "lottie-react-native";
 import GoogleSVG from "../assets/Images/GoogleLogo.svg";
 import FacebookSVG from "../assets/Images/FacebookLogo.svg";
 import AppleSVG from "../assets/Images/AppleLogo.svg";
-import { SIZES } from "../constants/themes";
+import { Input } from "@ui-kitten/components";
+import { useEffect } from "react";
 
 const RegisterByEmailScreen = () => {
+  const VerifiedIcon = (props) => (
+    <LottieView
+      source={require("../assets/Animations/SuccessAnimation.json")}
+      style={{
+        width: 34,
+        height: 34,
+      }}
+      loop="false"
+      autoPlay="false"
+      resizeMode="contain"
+    />
+  );
+
   const navigation = useNavigation();
 
   const [secureTextEntry, setSecureTextEntry] = React.useState(true);
@@ -41,25 +54,21 @@ const RegisterByEmailScreen = () => {
 
   const EmailIcon = () => <Icon name="mail" size={25} color="black" />;
 
-  const animation = {
-    animation2: require("../assets/Animations/SuccessAnimation.json"),
+  const [email, setEmail] = useState("");
+
+  const [isStudent, setIsStudent] = useState(false);
+
+  const checkIfEmailIsStudentEmail = (email) => {
+    setIsStudent(email.endsWith("@student.upt.ro"));
+    if (isStudent) setEmailViewStyle(styles.TextInputView1);
   };
 
-  const VerifiedIcon = () => (
-    <LottieView
-      source={require("../assets/Animations/SuccessAnimation.json")}
-      style={{
-        width: 34,
-        height: 34,
-      }}
-      loop="false"
-      autoPlay="true"
-      resizeMode="containted"
-    />
-  );
+  useEffect(() => {
+    checkIfEmailIsStudentEmail(email);
+  }, [email]);
 
-  const [email, setEmail] = useState("");
-  const isStudentEmail = email.endsWith("@student.upt.ro");
+  const [emailViewStyle, setEmailViewStyle] = useState(styles.TextInputView1);
+  const [isRegisterButtonPressed, setRegisterButtonPressed] = useState(false);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -68,14 +77,19 @@ const RegisterByEmailScreen = () => {
           <Icon name="arrowleft" size={30} color="black" style={styles.icon} />
         </TouchableOpacity>
         <Text style={styles.headerText}>Creeaza contul tau</Text>
-        <View style={styles.TextInputView1}>
+        <View style={emailViewStyle}>
           <Input
             placeholder="Email"
             size="large"
             value={email}
-            onChangeText={setEmail}
+            onChangeText={(text) => {
+              setEmail(text);
+              checkIfEmailIsStudentEmail(text);
+            }}
             accessoryLeft={EmailIcon}
-            accessoryRight={isStudentEmail && VerifiedIcon}
+            accessoryRight={
+              isStudent ? VerifiedIcon : null // conditionally render the VerifiedIcon component
+            }
             textStyle={{ fontSize: 15 }}
             style={{
               width: 330,
@@ -84,6 +98,13 @@ const RegisterByEmailScreen = () => {
             }}
           />
         </View>
+        {!isStudent && isRegisterButtonPressed && (
+          <View style={{ alignItems: "center", marginTop: 5 }}>
+            <Text style={{ color: "red", fontSize: 10 }}>
+              Email-ul trebuie sa contina domeniul @student.upt.ro
+            </Text>
+          </View>
+        )}
         <View style={styles.TextInputView2}>
           <Input
             placeholder="Parola"
@@ -103,10 +124,11 @@ const RegisterByEmailScreen = () => {
         <SafeAreaView style={{ alignItems: "center" }}>
           <TouchableOpacity
             onPress={() => {
-              if (isStudentEmail) {
-                console.log(isStudentEmail, showVerifiedIcon);
-                setShowVerifiedIcon(true);
-                console.log(showVerifiedIcon);
+              if (!isStudent) {
+                setEmailViewStyle(styles.TextInputView1Updated);
+                setRegisterButtonPressed(true);
+              } else {
+                setEmailViewStyle(styles.TextInputView1);
               }
             }}
           >
@@ -201,6 +223,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 10,
     borderColor: "#eee",
+    backgroundColor: "#FAFAFA",
+    flexDirection: "row",
+    width: 340,
+    height: 60,
+    marginLeft: 20,
+    marginTop: 60,
+    borderWidth: 1,
+  },
+  TextInputView1Updated: {
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    borderColor: "red",
     backgroundColor: "#FAFAFA",
     flexDirection: "row",
     width: 340,

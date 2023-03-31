@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
   icon: {
     justifyContent: "flex-end",
     alignContent: "flex-end",
-    marginTop: StatusBar.currentHeight + 20,
+    marginTop: StatusBar.currentHeight + (-10),
     marginLeft: 10,
   },
   AppIconStyle: {
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 30,
     marginTop: 30,
-    marginBottom: 10,
+    marginBottom: 30,
   },
   TextInputView1: {
     justifyContent: "center",
