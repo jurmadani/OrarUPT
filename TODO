@@ -1,4 +1,10 @@
-1)make the registerscreenbyemail work and add animations
+1)finish createprofile screen, make validation on inputs and implement it to the user management state
+2)design home screen on figma
+
+4)add state management to your app based on user
+
+
+---------------------------------------
 2)add logic to the register buttons/login
 3)create more figma designs to have a starting-point
 

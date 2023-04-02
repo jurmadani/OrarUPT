@@ -21,18 +21,21 @@ import FacebookSVG from "../assets/Images/FacebookLogo.svg";
 import AppleSVG from "../assets/Images/AppleLogo.svg";
 import { Input } from "@ui-kitten/components";
 import { useEffect } from "react";
-import { KeyboardAvoidingView } from "native-base";
 import useAuth from "../hooks/useAuth";
 
 const RegisterByEmailScreen = () => {
   const navigation = useNavigation();
-  const { register } = useAuth();
+  const { register, user } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isStudent, setIsStudent] = useState(false);
   const [secureTextEntry, setSecureTextEntry] = React.useState(true);
   const [emailViewStyle, setEmailViewStyle] = useState(styles.TextInputView1);
+  const [passwordViewStyle, setPasswordViewStyle] = useState(
+    styles.TextInputView2
+  );
   const [isRegisterButtonPressed, setRegisterButtonPressed] = useState(false);
+
 
   const VerifiedIcon = (boolean) => (
     <View>
@@ -65,13 +68,35 @@ const RegisterByEmailScreen = () => {
   const EmailIcon = () => <Icon name="mail" size={25} color="black" />;
 
   const checkIfEmailIsStudentEmail = (email) => {
-    setIsStudent(email.endsWith("@student.upt.ro"));
-    if (isStudent) setEmailViewStyle(styles.TextInputView1);
+    const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    if (regex.test(email)) {
+      const parts = email.split("@");
+      const usernameRegex = /^[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+$/;
+      if (parts[1] === "student.upt.ro" && usernameRegex.test(parts[0])) {
+        setEmailViewStyle(styles.TextInputView1);
+        setIsStudent(true);
+      } else {
+        setIsStudent(false);
+      }
+    } else {
+      setIsStudent(false);
+    }
+  };
+
+  const checkIfPasswordMeetsRequirments = (password) => {
+    if (isStudent && password.length >= 6) {
+      setPasswordViewStyle(styles.TextInputView2);
+      setRegisterButtonPressed(false);
+    }
   };
 
   useEffect(() => {
     checkIfEmailIsStudentEmail(email);
   }, [email]);
+
+  useEffect(() => {
+    checkIfPasswordMeetsRequirments(password);
+  }, [password]);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -104,17 +129,18 @@ const RegisterByEmailScreen = () => {
         {!isStudent && isRegisterButtonPressed && (
           <View style={{ alignItems: "center", marginTop: 5 }}>
             <Text style={{ color: "red", fontSize: 10 }}>
-              Email-ul trebuie sa contina domeniul @student.upt.ro
+              Email-ul trebuie sa fie de forma prenume.nume@student.upt.ro
             </Text>
           </View>
         )}
-        <View style={styles.TextInputView2}>
+        <View style={passwordViewStyle}>
           <Input
             placeholder="Parola"
             size="large"
             value={password}
             onChangeText={(text) => {
               setPassword(text);
+              checkIfPasswordMeetsRequirments(text);
             }}
             accessoryRight={renderIcon}
             accessoryLeft={PasswordIcon}
@@ -127,7 +153,13 @@ const RegisterByEmailScreen = () => {
             }}
           />
         </View>
-
+        {isStudent && isRegisterButtonPressed && (
+          <View style={{ alignItems: "center", marginTop: 5 }}>
+            <Text style={{ color: "red", fontSize: 10 }}>
+              Parola trebuie sa contina minim 6 caractere
+            </Text>
+          </View>
+        )}
         <SafeAreaView style={{ alignItems: "center" }}>
           <TouchableOpacity
             onPress={() => {
@@ -135,8 +167,16 @@ const RegisterByEmailScreen = () => {
                 setEmailViewStyle(styles.TextInputView1Updated);
                 setRegisterButtonPressed(true);
               } else {
-                setEmailViewStyle(styles.TextInputView1);
-                register(email, password);
+                if (password.length >= 6) {
+                  setEmailViewStyle(styles.TextInputView1);
+                  setRegisterButtonPressed(false);
+                  register(email, password);
+                  navigation.replace('Setting-Up Profile');
+
+                } else {
+                  setPasswordViewStyle(styles.TextInputView2Updated);
+                  setRegisterButtonPressed(true);
+                }
               }
             }}
           >
@@ -257,6 +297,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 10,
     borderColor: "#eee",
+    backgroundColor: "#FAFAFA",
+    flexDirection: "row",
+    width: 340,
+    height: 60,
+    marginLeft: 20,
+    marginTop: 10,
+    borderWidth: 1,
+  },
+  TextInputView2Updated: {
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    borderColor: "red",
     backgroundColor: "#FAFAFA",
     flexDirection: "row",
     width: 340,

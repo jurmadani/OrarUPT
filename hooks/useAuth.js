@@ -1,12 +1,15 @@
 import { View, Text } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { useContext } from "react";
 import { createContext } from "react";
 import { firebase } from "../firebase";
+import { useNavigation } from "@react-navigation/native";
 
 const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+
   return (
     <AuthContext.Provider
       value={{
@@ -14,11 +17,22 @@ export const AuthProvider = ({ children }) => {
           try {
             await firebase
               .auth()
-              .createUserWithEmailAndPassword(email, password);
+              .createUserWithEmailAndPassword(email, password)
+              .then(
+                setUser({
+                  email: email,
+                  nume: "",
+                  prenume: "",
+                  facultate: "",
+                  specializare: "",
+                  an: "",
+                })
+              );
           } catch (e) {
             console.log(e);
           }
         },
+        user: user,
       }}
     >
       {children}
