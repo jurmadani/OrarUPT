@@ -6,24 +6,35 @@ import RegisterByEmailScreen from "./Screens/RegisterByEmailScreen";
 import LoginScreen from "./Screens/LoginScreen";
 import HomeScreen from "./Screens/HomeScreen";
 import CreateProfileScreen from "./Screens/CreateProfileScreen";
+import LoadingScreen from "./Screens/LoadingScreen";
 
 const Stack = createNativeStackNavigator();
 /*
-Stack screens order: Splash,Getting Started, Pre Login,
+Stack screens order: Splash,Getting Started, Pre Login, Reguister, Setting-Up Profile,LoadingScreenAfterSetting-Up Profile, HomeScreen
 */
 const StackNavigator = () => {
   return (
     <Stack.Navigator>
-
-       <Stack.Screen
-        name="Setting-Up Profile"
-        component={CreateProfileScreen}
-        options={{ headerShown: false }}
+      <Stack.Screen
+        name="Register"
+        component={RegisterByEmailScreen}
+        options={{ headerShown: false, gestureEnabled: false }}
       />
       <Stack.Screen
-      name="HomeScreen"
-      component={HomeScreen}
-      options={{headerShown:false, gestureEnabled:false}}/>
+        name="Setting-Up Profile"
+        component={CreateProfileScreen}
+        options={{ headerShown: false, gestureEnabled: false }}
+      />
+      <Stack.Screen
+        name="LoadingScreenAfterSetting-Up Profile"
+        component={LoadingScreen}
+        options={{ headerShown: false, gestureEnabled: false }}
+      />
+      <Stack.Screen
+        name="HomeScreen"
+        component={HomeScreen}
+        options={{ headerShown: false, gestureEnabled: false }}
+      />
     </Stack.Navigator>
   );
 };

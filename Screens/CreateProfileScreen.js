@@ -152,16 +152,19 @@ const CreateProfileScreen = () => {
   const [viewStyle2, setViewStyle2] = useState(styles.TextInputView2);
   const [profilePictureURL, setProfilePictureURL] = useState("");
   const [buttonPressed, setbuttonPressed] = useState(false);
-  const { user } = useAuth();
+  const { user, updateUser } = useAuth();
 
   useEffect(() => {
     if (buttonPressed) {
       const InsertUserAndPictureIntoFirebase = async () => {
         await addImageToStorage(image);
         await getDownloadURL();
-        console.log(profilePictureURL);
       };
-      InsertUserAndPictureIntoFirebase().then(() => console.log('User information and his profile picture added to firebase'))
+      InsertUserAndPictureIntoFirebase().then(() =>
+        console.log(
+          "User information and his profile picture added to firebase"
+        )
+      );
     }
   }, [image]);
 
@@ -188,8 +191,24 @@ const CreateProfileScreen = () => {
     return selectedGrupa != "";
   };
 
+  const createUser = (url) => {
+    const newUser = {
+      email: user?.email,
+      nume: nume,
+      prenume: prenume,
+      facultate: selectedFacultate,
+      specializare: selectedSpecializare,
+      facultate: selectedFacultate,
+      an: selectedAn,
+      grupa: selectedGrupa,
+      profilePictureURL: url,
+    };
+    return newUser;
+  };
+
   const getDownloadURL = async () => {
-    const urlRef = firebase.storage().ref().child("test@yahoo.com");
+    console.log(user.email);
+    const urlRef = firebase.storage().ref().child(user?.email);
     const url = await urlRef.getDownloadURL();
     setProfilePictureURL(url.toString());
     await addUserIntoFirestore(
@@ -201,6 +220,9 @@ const CreateProfileScreen = () => {
       selectedGrupa,
       url.toString()
     );
+
+    const newUser = createUser(url.toString());
+    updateUser(newUser);
   };
 
   const addUserIntoFirestore = async (
@@ -215,8 +237,9 @@ const CreateProfileScreen = () => {
     firebase
       .firestore()
       .collection("Users")
-      .doc(user?.UID)
+      .doc(user?.email)
       .set({
+        email: user.email,
         nume: nume,
         prenume: prenume,
         facultate: facultate,
@@ -225,7 +248,11 @@ const CreateProfileScreen = () => {
         grupa: grupa,
         profilePictureURL: profilePictureURL,
       })
-      .then(() => console.log("User added!"))
+      .then(() => {
+        const newUser = createUser(profilePictureURL);
+        updateUser(newUser);
+      })
+      .then(() => console.log("User added"))
       .catch((error) => console.log(error));
   };
 
@@ -247,7 +274,7 @@ const CreateProfileScreen = () => {
   const addImageToStorage = async (image) => {
     const response = await fetch(image);
     const blob = await response.blob();
-    const filename = "test@yahoo.com";
+    const filename = user?.email;
 
     var ref = firebase.storage().ref().child(filename).put(blob);
     try {
@@ -257,12 +284,6 @@ const CreateProfileScreen = () => {
     }
 
     console.log("Picture uploaded");
-  };
-
-  const retrieveFromStorage = () => {
-    setImage(
-      "https://firebasestorage.googleapis.com/v0/b/orar-upt.appspot.com/o/DefaultProfilePicture.png?alt=media&token=3f390381-e7d8-4232-a5ec-79a2388af267"
-    );
   };
 
   return (
@@ -488,6 +509,8 @@ const CreateProfileScreen = () => {
                             {
                               text: "Adauga imagine",
                               onPress: async () => {
+                                navigation.replace("LoadingScreenAfterSetting-Up Profile");
+
                                 setbuttonPressed(true);
                                 await pickImage();
                               },
@@ -495,6 +518,7 @@ const CreateProfileScreen = () => {
                             {
                               text: "Continua",
                               onPress: async () => {
+                                navigation.replace("LoadingScreenAfterSetting-Up Profile");
                                 await addUserIntoFirestore(
                                   nume,
                                   prenume,
@@ -512,9 +536,12 @@ const CreateProfileScreen = () => {
                           ]
                         );
                       } else {
+                        navigation.replace("LoadingScreenAfterSetting-Up Profile");
+
                         (async () => {
-                          await Promise.all([addImageToStorage(image), getDownloadURL()]);
-                          console.log("Success!");
+                          await addImageToStorage(image),
+                            await getDownloadURL(),
+                            console.log("Success!");
                         })();
                       }
                     }

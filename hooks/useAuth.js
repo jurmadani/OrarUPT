@@ -10,6 +10,10 @@ const AuthContext = createContext({});
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
+  const updateUser = (newUser) => {
+    setUser(newUser)
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -26,6 +30,8 @@ export const AuthProvider = ({ children }) => {
                   facultate: "",
                   specializare: "",
                   an: "",
+                  grupa: "",
+                  profilePictureURL:"",
                 })
               );
           } catch (e) {
@@ -33,6 +39,7 @@ export const AuthProvider = ({ children }) => {
           }
         },
         user: user,
+        updateUser : updateUser
       }}
     >
       {children}
