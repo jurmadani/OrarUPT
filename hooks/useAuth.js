@@ -4,6 +4,8 @@ import { useContext } from "react";
 import { createContext } from "react";
 import { firebase } from "../firebase";
 import { useNavigation } from "@react-navigation/native";
+import * as AppleAuthentication from 'expo-apple-authentication'
+
 
 const AuthContext = createContext({});
 
@@ -12,6 +14,21 @@ export const AuthProvider = ({ children }) => {
 
   const updateUser = (newUser) => {
     setUser(newUser)
+  }
+
+  const handleSignIn = async () => {
+    try{
+      const credential = await AppleAuthentication.signInAsync({
+        requestedScopes:[
+          AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+          AppleAuthentication.AppleAuthenticationScope.EMAIL
+        ]
+      })
+      console.log(credential)
+      
+    }catch(e){
+      console.log(e)
+    }
   }
 
   return (
@@ -39,7 +56,8 @@ export const AuthProvider = ({ children }) => {
           }
         },
         user: user,
-        updateUser : updateUser
+        updateUser : updateUser,
+        loginViaApple: handleSignIn
       }}
     >
       {children}

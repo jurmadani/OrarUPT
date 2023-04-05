@@ -10,6 +10,7 @@ import useAuth from "../hooks/useAuth";
 
 const LoginScreen = () => {
   const navigation = useNavigation();
+  const {loginViaApple} = useAuth();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -37,7 +38,7 @@ const LoginScreen = () => {
         <Text style={styles.svgText}>Continua cu Google</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.TouchableOpacityStyle}>
+      <TouchableOpacity style={styles.TouchableOpacityStyle} onPress={loginViaApple}>
         <Image
           source={AppleSVG}
           resizeMode="contain"
