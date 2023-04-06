@@ -16,8 +16,13 @@ const StackNavigator = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="PreLogin"
-        component={PreLoginScreen}
+        name="Login"
+        component={LoginScreen}
+        options={{ headerShown: false, gestureEnabled: false }}
+      />
+        <Stack.Screen
+        name="HomeScreen"
+        component={HomeScreen}
         options={{ headerShown: false, gestureEnabled: false }}
       />
     

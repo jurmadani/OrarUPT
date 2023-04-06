@@ -10,7 +10,7 @@ import useAuth from "../hooks/useAuth";
 
 const LoginScreen = () => {
   const navigation = useNavigation();
-  const {loginViaApple} = useAuth();
+  const {loginViaApple, loginViaGoogle,loginViaFacebook} = useAuth();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -20,7 +20,7 @@ const LoginScreen = () => {
       />
       <Text style={styles.headerText}>Hai sa incepem</Text>
 
-      <TouchableOpacity style={styles.TouchableOpacityStyle}>
+      <TouchableOpacity style={styles.TouchableOpacityStyle} onPress={loginViaFacebook}>
         <Image
           source={FacebookSVG}
           resizeMode="contain"
@@ -29,7 +29,7 @@ const LoginScreen = () => {
         <Text style={styles.svgText}>Continua cu Facebook</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.TouchableOpacityStyle}>
+      <TouchableOpacity style={styles.TouchableOpacityStyle} onPress={loginViaGoogle}>
         <Image
           source={GoogleSVG}
           resizeMode="contain"

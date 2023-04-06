@@ -18,6 +18,8 @@ import { Button } from "@ui-kitten/components/ui";
 import { color } from "@mui/system";
 import { height, width } from "../constants/themes";
 import { useNavigation } from "@react-navigation/native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import useAuth from "../hooks/useAuth";
 
 const LoginScreen = () => {
   const [secureTextEntry, setSecureTextEntry] = React.useState(true);
@@ -36,15 +38,17 @@ const LoginScreen = () => {
     </TouchableWithoutFeedback>
   );
   const navigation = useNavigation();
+  const {loginViaApple } = useAuth();
 
   return (
     <SafeAreaView style={styles.container}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
         <Icon name="arrowleft" size={30} color="black" style={styles.icon} />
       </TouchableOpacity>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.container}
+      <KeyboardAwareScrollView
+        resetScrollToCoords={{ x: 0, y: 0 }}
+        contentContainerStyle={styles.container}
+        scrollEnabled={true}
       >
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.inner}>
@@ -85,8 +89,7 @@ const LoginScreen = () => {
             </View>
           </View>
         </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
-
+      </KeyboardAwareScrollView>
       <TouchableOpacity style={{ alignItems: "center" }}>
         <Button style={styles.button}>Conecteaza-te</Button>
       </TouchableOpacity>
@@ -108,13 +111,13 @@ const styles = StyleSheet.create({
   icon: {
     justifyContent: "flex-end",
     alignContent: "flex-end",
-    marginTop: StatusBar.currentHeight + (-10),
+    marginTop: StatusBar.currentHeight + 20,
     marginLeft: 10,
   },
   AppIconStyle: {
     width: 150,
     height: 150,
-    marginTop: StatusBar.currentHeight || 40, // add marginTop
+    marginTop: StatusBar.currentHeight || 100, // add marginTop
   },
   headerText: {
     fontWeight: "bold",
@@ -148,7 +151,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   button: {
-    marginBottom: 20,
     width: 300,
     height: 50,
     backgroundColor: "#2E3192",

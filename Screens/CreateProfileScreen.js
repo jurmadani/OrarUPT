@@ -202,6 +202,8 @@ const CreateProfileScreen = () => {
       an: selectedAn,
       grupa: selectedGrupa,
       profilePictureURL: url,
+      profileIsSet: "true",
+      authProvider: user.authProvider,
     };
     return newUser;
   };
@@ -237,7 +239,7 @@ const CreateProfileScreen = () => {
     firebase
       .firestore()
       .collection("Users")
-      .doc(user?.email)
+      .doc(user.authProvider === "studentEmail" ? user.email : user.userAppleUID)
       .set({
         email: user.email,
         nume: nume,
@@ -247,6 +249,8 @@ const CreateProfileScreen = () => {
         an: an,
         grupa: grupa,
         profilePictureURL: profilePictureURL,
+        profileIsSet: "true",
+        authProvider: user.authProvider
       })
       .then(() => {
         const newUser = createUser(profilePictureURL);
@@ -509,16 +513,19 @@ const CreateProfileScreen = () => {
                             {
                               text: "Adauga imagine",
                               onPress: async () => {
-                                navigation.replace("LoadingScreenAfterSetting-Up Profile");
-
                                 setbuttonPressed(true);
                                 await pickImage();
+                                navigation.replace(
+                                  "LoadingScreenAfterSetting-Up Profile"
+                                );
                               },
                             },
                             {
                               text: "Continua",
                               onPress: async () => {
-                                navigation.replace("LoadingScreenAfterSetting-Up Profile");
+                                navigation.replace(
+                                  "LoadingScreenAfterSetting-Up Profile"
+                                );
                                 await addUserIntoFirestore(
                                   nume,
                                   prenume,
@@ -536,7 +543,9 @@ const CreateProfileScreen = () => {
                           ]
                         );
                       } else {
-                        navigation.replace("LoadingScreenAfterSetting-Up Profile");
+                        navigation.replace(
+                          "LoadingScreenAfterSetting-Up Profile"
+                        );
 
                         (async () => {
                           await addImageToStorage(image),

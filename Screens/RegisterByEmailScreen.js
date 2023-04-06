@@ -7,6 +7,7 @@ import {
   TouchableWithoutFeedback,
   Image,
   Keyboard,
+  Alert
 } from "react-native";
 import React, { useState } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -35,7 +36,6 @@ const RegisterByEmailScreen = () => {
     styles.TextInputView2
   );
   const [isRegisterButtonPressed, setRegisterButtonPressed] = useState(false);
-
 
   const VerifiedIcon = (boolean) => (
     <View>
@@ -170,9 +170,11 @@ const RegisterByEmailScreen = () => {
                 if (password.length >= 6) {
                   setEmailViewStyle(styles.TextInputView1);
                   setRegisterButtonPressed(false);
-                  register(email, password);
-                  navigation.replace('Setting-Up Profile');
-
+                  if (register(email, password) == true)
+                    navigation.replace("Setting-Up Profile");
+                  else{
+                    Alert.alert("Email indisponibil",email + " este deja folosit")
+                  }
                 } else {
                   setPasswordViewStyle(styles.TextInputView2Updated);
                   setRegisterButtonPressed(true);
