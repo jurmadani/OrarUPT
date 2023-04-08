@@ -58,12 +58,12 @@ export const AuthProvider = ({ children }) => {
           profilePictureURL: user.profilePictureURL,
           profileIsSet: user.profileIsSet,
           authProvider: user.authProvider,
-          userAppleUID: user.userAppleUID
+          userAppleUID: user.userAppleUID,
         });
         if (user.profileIsSet === "true") {
-          console.log("User logged in via Apple Login successfully")
-          navigation.navigate("HomeScreen");}
-        else navigation.navigate("CreateProfileScreen");
+          console.log("User logged in via Apple Login successfully");
+          navigation.navigate("MainApp");
+        } else navigation.navigate("CreateProfileScreen");
       }
     } catch (e) {
       console.log(e);
@@ -75,18 +75,54 @@ export const AuthProvider = ({ children }) => {
   };
 
   const handleSignInFacebook = async () => {
-     Alert.alert("Facebook sign-in temporarly unavailable");
+    Alert.alert("Facebook sign-in temporarly unavailable");
   };
 
   return (
     <AuthContext.Provider
       value={{
         register: async (email, password) => {
-          try {
-            await firebase
-              .auth()
-              .createUserWithEmailAndPassword(email, password)
-              .then(
+          var okToProcedeFurher = true;
+          await firebase
+            .auth()
+            .createUserWithEmailAndPassword(email, password)
+            .catch((e) => {
+              Alert.alert("Email indisponibil", email + " este folosit deja");
+              okToProcedeFurher = false;
+            });
+          if (okToProcedeFurher) {
+            setUser({
+              email: email,
+              nume: "",
+              prenume: "",
+              facultate: "",
+              specializare: "",
+              an: "",
+              grupa: "",
+              profilePictureURL: "",
+              profileIsSet: "false",
+              authProvider: "studentEmail",
+            });
+            console.log(
+              user,
+              "User is good, navigating to creating profile screen..."
+            );
+          }
+        },
+        login: async (email, password) => {
+          await firebase
+            .auth()
+            .signInWithEmailAndPassword(email, password)
+            .then(async () => {
+              const user = await firebase
+                .firestore()
+                .collection("Users")
+                .doc(email)
+                .get();
+              if (
+                user.data() === undefined ||
+                user.data().profileIsSet === "false"
+              ) {
                 setUser({
                   email: email,
                   nume: "",
@@ -97,14 +133,24 @@ export const AuthProvider = ({ children }) => {
                   grupa: "",
                   profilePictureURL: "",
                   profileIsSet: "false",
-                  authProvider: "studentEmail"
-                })
-              );
-              return true
-          } catch (e) {
-            console.log("test" + e);
-            return
-          }
+                  authProvider: "studentEmail",
+                });
+                navigation.navigate("Setting-Up Profile");
+              } else {
+                setUser(user.data());
+                navigation.navigate("MainApp");
+              }
+            })
+            .catch(function (error) {
+              // Handle Errors here.
+              var errorCode = error.code;
+              if (errorCode === "auth/wrong-password") {
+                Alert.alert("Parola incorecta");
+              } else if (errorCode === "auth/invalid-email") {
+                Alert.alert("Email invalid");
+              }
+              console.log(errorCode);
+            });
         },
         user: user,
         updateUser: updateUser,

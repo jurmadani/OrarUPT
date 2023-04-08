@@ -26,7 +26,7 @@ const LoadingScreen = () => {
   const handleAnimationFinish = () => {
     setAnimationCount(animationCount + 1);
     if (animationCount === 1) {
-      navigation.replace("HomeScreen");
+      navigation.replace("MainApp");
     }
   };
 

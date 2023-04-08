@@ -67,8 +67,8 @@ const OnBoardingScreen = () => {
             <LottieView
               source={item.animation}
               style={{
-                width: SIZES.width - 500,
-                height: 300,
+                width: item.id != 2 ? SIZES.width - 500 : SIZES.width - 350,
+                height: item.id != 2 ? 300 : 220,
               }}
               resizeMode="contain"
               autoPlay
@@ -78,7 +78,7 @@ const OnBoardingScreen = () => {
               style={{
                 fontWeight: "bold",
                 color: COLORS.title,
-                paddingTop: 45,
+                paddingTop: item.id != 2 ? 45: 125,
                 fontSize: 35,
               }}
             >

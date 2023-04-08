@@ -7,25 +7,21 @@ import LoginScreen from "./Screens/LoginScreen";
 import HomeScreen from "./Screens/HomeScreen";
 import CreateProfileScreen from "./Screens/CreateProfileScreen";
 import LoadingScreen from "./Screens/LoadingScreen";
+import BottomTabNavigator from './BottomTabNavigator'
 
 const Stack = createNativeStackNavigator();
 /*
-Stack screens order: Splash,Getting Started, Pre Login, Reguister, Setting-Up Profile,LoadingScreenAfterSetting-Up Profile, HomeScreen
+Stack screens order: Splash,Getting Started, PreLogin, Reguister, Setting-Up Profile,LoadingScreenAfterSetting-Up Profile, MainApp,
 */
 const StackNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        name="Login"
-        component={LoginScreen}
-        options={{ headerShown: false, gestureEnabled: false }}
-      />
         <Stack.Screen
-        name="HomeScreen"
-        component={HomeScreen}
+        name="MainApp"
+        component={BottomTabNavigator}
         options={{ headerShown: false, gestureEnabled: false }}
       />
-    
+      
     </Stack.Navigator>
   );
 };

@@ -11,7 +11,7 @@ const SplashScreen = () => {
   const playAnimation = () => {
     Animated.timing(progress, {
       toValue: 1,
-      duration: 2000,
+      duration: 1000,
       useNativeDriver: true,
     }).start(() => {
       setPlayCount(playCount + 1);

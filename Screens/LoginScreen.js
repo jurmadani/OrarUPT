@@ -9,7 +9,7 @@ import {
   KeyboardAvoidingView,
   Keyboard,
 } from "react-native";
-import React from "react";
+import React, {useState} from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/AntDesign";
 import EntypoIcon from "react-native-vector-icons/Entypo";
@@ -23,6 +23,8 @@ import useAuth from "../hooks/useAuth";
 
 const LoginScreen = () => {
   const [secureTextEntry, setSecureTextEntry] = React.useState(true);
+  const [email, setEmail] = useState('')
+  const [password ,setPassword] = useState('')
 
   const toggleSecureEntry = () => {
     setSecureTextEntry(!secureTextEntry);
@@ -38,7 +40,7 @@ const LoginScreen = () => {
     </TouchableWithoutFeedback>
   );
   const navigation = useNavigation();
-  const {loginViaApple } = useAuth();
+  const {login } = useAuth();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -61,6 +63,10 @@ const LoginScreen = () => {
             </Text>
             <View style={styles.TextInputView1}>
               <Input
+                value={email}
+                onChangeText={(text) =>{
+                  setEmail(text)
+                }}
                 placeholder="Email"
                 size="large"
                 accessoryLeft={EmailIcon}
@@ -76,6 +82,10 @@ const LoginScreen = () => {
               <Input
                 placeholder="Parola"
                 size="large"
+                value={password}
+                onChangeText={(text) => {
+                  setPassword(text)
+                }}
                 accessoryRight={renderIcon}
                 accessoryLeft={PasswordIcon}
                 secureTextEntry={secureTextEntry}
@@ -90,7 +100,7 @@ const LoginScreen = () => {
           </View>
         </TouchableWithoutFeedback>
       </KeyboardAwareScrollView>
-      <TouchableOpacity style={{ alignItems: "center" }}>
+      <TouchableOpacity style={{ alignItems: "center" }} onPress={() => login(email,password)}>
         <Button style={styles.button}>Conecteaza-te</Button>
       </TouchableOpacity>
 
