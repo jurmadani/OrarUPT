@@ -1,11 +1,12 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import React from "react";
-import { ImageBackground } from "react-native";
 import { TouchableOpacity } from "react-native";
-import { data } from "../AC-IS-Data";
+import { useNavigation } from "@react-navigation/native";
 
 const MaterieCard = ({ item }) => {
 
+  const navigation = useNavigation();
+  console.log(item)
 
   return (
     <View style={[styles.container, {backgroundColor:item.CardBackground}]}>
@@ -23,7 +24,7 @@ const MaterieCard = ({ item }) => {
         />
         <TouchableOpacity
           onPress={() =>
-            console.log("vezi mai multe informatii despre materie screen")
+           navigation.navigate( 'MaterieInformatieModal', {materie: item})
           }
         >
           <Image

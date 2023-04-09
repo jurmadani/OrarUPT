@@ -80,7 +80,7 @@ export const data = {
         "12:00-16:00": {
           Materie: "MTP",
           Sala: "B027a",
-          Categorie: "laborator",
+          Categorie: "Laborator",
           InformatieAditionala: "null",
         },
       },
@@ -103,7 +103,7 @@ export const data = {
         "18:00-20:00": {
           Materie: "TO",
           Sala: "B014",
-          Categorie: "laborator",
+          Categorie: "Laborator",
           InformatieAditionala: "null",
         },
       },
@@ -125,7 +125,7 @@ export const data = {
         "12:00-14:00": {
           Materie: "TO",
           Sala: "B014",
-          Categorie: "laborator",
+          Categorie: "Laborator",
           InformatieAditionala: "null",
         },
       },
@@ -147,7 +147,7 @@ export const data = {
         "18:00-20:00": {
           Materie: "SI",
           Sala: "A302",
-          Categorie: "laborator",
+          Categorie: "Laborator",
           InformatieAditionala: "null",
         },
       },
@@ -169,7 +169,7 @@ export const data = {
         "14:00-16:00": {
           Materie: "BD",
           Sala: "B027a",
-          Categorie: "laborator",
+          Categorie: "Laborator",
           InformatieAditionala: "null",
         },
       },
@@ -698,17 +698,16 @@ export const data = {
           "Grosu Mihai-Alexandru",
         ],
         MaterieIcon: require("./assets/Images/components-images/MaterieCardIcon-1.png"),
-        CardBackground: "#FF7648"
+        CardBackground: "#FF7648",
       },
       {
-        
         Nume: "Baze de date",
         FormaEvaluare: "Distribuita",
         Credite: 4,
         ProfesorCurs: "FILIP Ioan",
         ProfesoriLaborator: ["Vasar Cristian", "Robu Andreea", "Robu Raul"],
         MaterieIcon: require("./assets/Images/components-images/MaterieCardIcon-4.png"),
-        CardBackground : "#8F98FF"
+        CardBackground: "#8F98FF",
       },
       {
         Nume: "Securitatea informatiei",
@@ -721,8 +720,7 @@ export const data = {
           "Jichici Camil",
         ],
         MaterieIcon: require("./assets/Images/components-images/MaterieCardIcon-5.png"),
-        CardBackground : "#4DC591"
-        
+        CardBackground: "#4DC591",
       },
       {
         Nume: "Modelare, simulare şi elemente de identificare",
@@ -736,7 +734,7 @@ export const data = {
           "Bordeasu Dorin",
         ],
         MaterieIcon: require("./assets/Images/components-images/MaterieCardIcon-3.png"),
-        CardBackground : "#C8CEFF"
+        CardBackground: "#C8CEFF",
       },
       {
         Nume: "Tehnici de optimizare",
@@ -750,7 +748,7 @@ export const data = {
           "Elena-Lorena HEDREA",
         ],
         MaterieIcon: require("./assets/Images/components-images/MaterieCardIcon-2.png"),
-        CardBackground : "#FF8181"
+        CardBackground: "#FF8181",
       },
       {
         Nume: "Sisteme bazate pe microprocesoare şi microcontrolere",
@@ -764,7 +762,7 @@ export const data = {
           "Negîrla Darius-Octavian",
         ],
         MaterieIcon: require("./assets/Images/components-images/MaterieCardIcon-6.png"),
-        CardBackground : "#FFC278"
+        CardBackground: "#FFC278",
       },
       {
         Nume: "Microeconomie",
@@ -773,7 +771,7 @@ export const data = {
         ProfesorCurs: "VARTOLOMEI Mihaela",
         ProfesoriLaborator: ["VARTOLOMEI Mihaela"],
         MaterieIcon: require("./assets/Images/components-images/MaterieCardIcon-7.png"),
-        CardBackground : "#8F98FF"
+        CardBackground: "#8F98FF",
       },
     ],
   },

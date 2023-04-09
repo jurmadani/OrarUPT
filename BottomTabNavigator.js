@@ -4,6 +4,7 @@ import ScheduleScreen from "./Screens/ScheduleScreen";
 import SearchScreen from "./Screens/SearchScreen";
 import ProfileScreen from "./Screens/ProfileScreen";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import zIndex from "@mui/material/styles/zIndex";
 
 const Tab = createBottomTabNavigator();
 const HomeIcon = () => <Ionicons name="ios-home" size={20} />;

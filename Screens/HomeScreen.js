@@ -5,117 +5,99 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
+  ScrollView,
+  FlatList,
 } from "react-native";
 import React, { useRef } from "react";
 import useAuth from "../hooks/useAuth";
-import { FlatList, ScrollView } from "react-native-gesture-handler";
 import LottieView from "lottie-react-native";
 import { SafeAreaView } from "react-native";
 import MaterieCard from "../components/MaterieCard";
 import { data } from "../AC-IS-Data";
+import { ImageBackground } from "react-native";
+import OraCard from "../components/OraCard";
+import moment from "moment/moment";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
+const saptamanaCurenta = 8;
+
+const zile = {
+  Monday: "luni",
+  Tuesday: "marti",
+  Wednesday: "miercuri",
+  Thursday: "joi",
+  Friday: "vineri",
+  Saturday: "sambata",
+  Sunday: "duminica",
+};
+
+const dayOfWeek = moment().format("dddd");
 
 const HomeScreen = () => {
   var { user } = useAuth();
 
-  return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-      >
-        {/* background image*/}
+  const ComponentaOrarSubFormaDeCarduri = () => {
+    if (zile[dayOfWeek] !== "sambata" && zile[dayOfWeek] !== "duminica") {
+      const entries = Object.entries(
+        data.ANUL_II_SERIA_IS_SEM_II_2022_2023_LABORATOARE[zile[dayOfWeek]][
+          "3.1"
+        ]
+      );
 
-        <Image
-          source={require("../assets/Images/components-images/HomeScreenBackground.png")}
-          style={{
-            height: windowHeight,
-            width: windowWidth,
-            position: "absolute",
-          }}
-        />
-
-        {/* globe animation*/}
-        <LottieView
-          source={require("../assets/Animations/globe.json")}
-          autoPlay
-          loop
-          speed={0.8}
-          style={{
-            width: 220,
-            height: 220,
-            position: "absolute",
-            left: 55,
-            top: 54,
-            zIndex: 1, // Set zIndex to control the stacking order
-          }}
-        />
-
-        {/* books image*/}
-        <Image
-          source={require("../assets/Images/components-images/Books.png")}
-          style={{
-            left: 310,
-            top: 265,
-            position: "absolute",
-            zIndex: 2, // Set zIndex to control the stacking order
-          }}
-        />
-
-        {/* white view image*/}
-        <View
-          style={{
-            backgroundColor: "white",
-            width: windowWidth,
-            height: windowHeight * 2,
-            alignSelf: "center",
-            marginTop: (windowHeight - 10) / 2.3,
-            position: "absolute",
-            zIndex: 0, // Set zIndex to control the stacking order
-            borderRadius: 32,
-          }}
-        >
-          {/* Header for the first scroll view (horizontal)*/}
-          <Text
-            style={{
-              fontWeight: "bold",
-              fontSize: 24,
-              marginLeft: 20,
-              marginTop: 20,
-            }}
-          >
-            Materiile tale
-          </Text>
-          <Text
-            style={{
-              fontWeight: "600",
-              color: "#BCC1CD",
-              marginLeft: 17,
-              marginTop: 4,
-            }}
-          >
-            {" "}
-            Din acest semestru
-          </Text>
-
-          {/* Materii scroll view */}
-          <FlatList
-            horizontal={true}
-            data={data.NUME_MATERII_ANUL2_AC_IS.MATERII}
-            renderItem={({item}) => <MaterieCard item={item}/>}
-          />
+      return (
+        <View style={{ alignItems: "center", marginBottom: 100 }}>
+          {entries.map(([key, value]) => {
+            const infAdit = value.InformatieAditionala;
+            var esteSaptamanaPara;
+            if (saptamanaCurenta % 2 === 0)
+              esteSaptamanaPara = "saptamana para";
+            else esteSaptamanaPara = "saptamana impara";
+            if (infAdit === "null") {
+              return <OraCard item={value} ora={key} />;
+            } else if(infAdit === esteSaptamanaPara){
+              return <OraCard item={value} ora={key} />;; // sau orice altă acțiune pe care doriți să o efectuați când condiția nu este îndeplinită
+            }
+          })}
         </View>
+      );
+    } else {
+      // Dacă ziua este "sambata" sau "duminica", randează alt conținut
+      return (
+        <View style={{ alignItems: "center", marginBottom: 100 }}>
+          <LottieView
+            source={require("../assets/Animations/RelaxingManAnimation.json")}
+            autoPlay
+            loop
+            speed={0.3}
+            style={{
+              width: 200,
+              height: 200,
+            }}
+          />
+          <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 10 }}>
+            Astazi este {zile[dayOfWeek]}, nu ai ore
+          </Text>
+        </View>
+      );
+    }
+  };
 
-        {/* Header text + profile Icon*/}
+  return (
+    <ImageBackground
+      source={require("../assets/Images/components-images/HomeScreenBackground.png")}
+      resizeMode="contain"
+      style={styles.imageBackground}
+    >
+      <ScrollView showsHorizontalScrollIndicator={false}>
+        {/* Header message and profile picture icon*/}
         <View style={{ flexDirection: "row" }}>
           <Text
             style={{
               fontWeight: "bold",
               color: "white",
               fontSize: 32,
-              marginTop: 40,
+              marginTop: 80,
               width: windowHeight / 2 - 100,
               marginLeft: 20,
               zIndex: 3, // Set zIndex to control the stacking order
@@ -141,8 +123,111 @@ const HomeScreen = () => {
             />
           </TouchableOpacity>
         </View>
+
+        {/* globe animation*/}
+        <LottieView
+          source={require("../assets/Animations/globe.json")}
+          autoPlay
+          loop
+          speed={0.06}
+          style={{
+            width: 310,
+            height: 310,
+            position: "absolute",
+            left: 40,
+            top: 43,
+            zIndex: 1, // Set zIndex to control the stacking order
+          }}
+        />
+
+        {/* books image*/}
+        <Image
+          source={require("../assets/Images/components-images/Books.png")}
+          style={{
+            left: 310,
+            top: 265,
+            position: "absolute",
+            zIndex: 2, // Set zIndex to control the stacking order
+          }}
+        />
+
+        {/* white view image*/}
+        <View
+          style={{
+            backgroundColor: "white",
+            width: windowWidth,
+            alignSelf: "center",
+            marginTop: (windowHeight - 10) / 4.1,
+            zIndex: 0, // Set zIndex to control the stacking order
+            borderRadius: 32,
+          }}
+        >
+          {/* Header for the first scroll view (horizontal)*/}
+          <Text
+            style={{
+              fontWeight: "bold",
+              fontSize: 30,
+              marginLeft: 20,
+              marginTop: 20,
+            }}
+          >
+            Materiile tale
+          </Text>
+          <Text
+            style={{
+              fontWeight: "600",
+              color: "#BCC1CD",
+              marginLeft: 17,
+              marginTop: 4,
+              fontSize: 15,
+            }}
+          >
+            {" "}
+            Din acest semestru
+          </Text>
+
+          {/* Materii scroll view */}
+          <View>
+            <FlatList
+              horizontal={true}
+              data={data.NUME_MATERII_ANUL2_AC_IS.MATERII}
+              showsHorizontalScrollIndicator={false}
+              renderItem={({ item }) => <MaterieCard item={item} />}
+            />
+          </View>
+
+          {/*Second part of the homescreen  */}
+          {/* Header for the second part of the screen */}
+          <Text
+            style={{
+              alignSelf: "flex-start",
+              fontSize: 30,
+              fontWeight: "bold",
+              marginTop: 10,
+              marginLeft: 20,
+            }}
+          >
+            Este saptamana {saptamanaCurenta}
+          </Text>
+          {/* Under header text */}
+          <Text
+            style={{
+              fontWeight: "600",
+              color: "#BCC1CD",
+              marginLeft: 17,
+              marginTop: 4,
+              fontSize: 15,
+            }}
+          >
+            Orarul tau de astazi
+          </Text>
+          {/* Second flatlist */}
+          <ComponentaOrarSubFormaDeCarduri />
+        </View>
+
+        {/* Header text + profile Icon*/}
       </ScrollView>
-    </SafeAreaView>
+    </ImageBackground>
   );
 };
 
@@ -160,5 +245,9 @@ const styles = StyleSheet.create({
     marginBottom: 50,
     marginRight: 50,
     zIndex: 4,
+  },
+  imageBackground: {
+    width: windowWidth, // Set width to window width or desired width
+    height: windowHeight, // Set height to window height or desired height
   },
 });
