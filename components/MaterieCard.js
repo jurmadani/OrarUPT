@@ -6,7 +6,6 @@ import { useNavigation } from "@react-navigation/native";
 const MaterieCard = ({ item }) => {
 
   const navigation = useNavigation();
-  console.log(item)
 
   return (
     <View style={[styles.container, {backgroundColor:item.CardBackground}]}>

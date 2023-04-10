@@ -17,10 +17,11 @@ import { data } from "../AC-IS-Data";
 import { ImageBackground } from "react-native";
 import OraCard from "../components/OraCard";
 import moment from "moment/moment";
+import CursCard from "../components/CursCard";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
-const saptamanaCurenta = 8;
+const saptamanaCurenta = 9;
 
 const zile = {
   Monday: "luni",
@@ -36,31 +37,48 @@ const dayOfWeek = moment().format("dddd");
 
 const HomeScreen = () => {
   var { user } = useAuth();
+  var numberOfTestsPassed = 0;
 
   const ComponentaOrarSubFormaDeCarduri = () => {
     if (zile[dayOfWeek] !== "sambata" && zile[dayOfWeek] !== "duminica") {
-      const entries = Object.entries(
-        data.ANUL_II_SERIA_IS_SEM_II_2022_2023_LABORATOARE[zile[dayOfWeek]][
-          "3.1"
-        ]
-      );
+      try {
+        const entriesLaboratoare = Object.entries(
+          data.ANUL_II_SERIA_IS_SEM_II_2022_2023_LABORATOARE[zile[dayOfWeek]][
+            "3.1"
+          ]
+        );
 
-      return (
-        <View style={{ alignItems: "center", marginBottom: 100 }}>
-          {entries.map(([key, value]) => {
-            const infAdit = value.InformatieAditionala;
-            var esteSaptamanaPara;
-            if (saptamanaCurenta % 2 === 0)
-              esteSaptamanaPara = "saptamana para";
-            else esteSaptamanaPara = "saptamana impara";
-            if (infAdit === "null") {
-              return <OraCard item={value} ora={key} />;
-            } else if(infAdit === esteSaptamanaPara){
-              return <OraCard item={value} ora={key} />;; // sau orice altă acțiune pe care doriți să o efectuați când condiția nu este îndeplinită
-            }
-          })}
-        </View>
-      );
+        return (
+          <View style={{ alignItems: "center", marginBottom:100 }}>
+            {/* Laboratoare */}
+            <Text
+              style={{
+                fontWeight: "bold",
+                fontSize: 30,
+                marginLeft: 20,
+                marginTop: 20,
+                alignSelf: "flex-start",
+              }}
+            >
+              Laboratoare
+            </Text>
+            {entriesLaboratoare.map(([key, value]) => {
+              const infAdit = value.InformatieAditionala;
+              var esteSaptamanaPara;
+              if (saptamanaCurenta % 2 === 0)
+                esteSaptamanaPara = "saptamana para";
+              else esteSaptamanaPara = "saptamana impara";
+              if (infAdit === "null") {
+                return <OraCard item={value} ora={key} />;
+              } else if (infAdit === esteSaptamanaPara) {
+                return <OraCard item={value} ora={key} />; // sau orice altă acțiune pe care doriți să o efectuați când condiția nu este îndeplinită
+              }
+            })}
+          </View>
+        );
+      } catch (e) {
+        console.log(e);
+      }
     } else {
       // Dacă ziua este "sambata" sau "duminica", randează alt conținut
       return (
@@ -80,6 +98,59 @@ const HomeScreen = () => {
           </Text>
         </View>
       );
+    }
+  };
+
+  const ComponentaOrarDoarCursSubFormaDeCarduri = () => {
+    if (zile[dayOfWeek] !== "sambata" && zile[dayOfWeek] !== "duminica") {
+      try {
+        const entriesCursuri = Object.entries(
+          data.ANUL_II_SERIA_IS_SEM_II_2022_2023_CURSURI[zile[dayOfWeek]]
+        );
+        return (
+          <View style={{ alignItems: "center", marginBottom: 100, marginTop:-100, }}>
+            {/* Cursuri */}
+            <Text
+              style={{
+                fontWeight: "bold",
+                fontSize: 30,
+                marginLeft: 20,
+                marginTop: 20,
+                alignSelf: "flex-start",
+              }}
+            >
+              Cursuri
+            </Text>
+            {entriesCursuri.map(([key, value]) => {
+              return <CursCard item={value} ora={key} />;
+            })}
+          </View>
+        );
+      } catch (e) {
+        console.log(e);
+        numberOfTestsPassed += 1;
+      }
+      if (numberOfTestsPassed === 2) {
+        return (
+          <View style={{ alignItems: "center", marginBottom: 100 }}>
+            <LottieView
+              source={require("../assets/Animations/RelaxingManAnimation.json")}
+              autoPlay
+              loop
+              speed={0.3}
+              style={{
+                width: 200,
+                height: 200,
+              }}
+            />
+            <Text
+              style={{ fontSize: 20, fontWeight: "bold", marginBottom: 10 }}
+            >
+              Astazi este {zile[dayOfWeek]}, nu ai ore
+            </Text>
+          </View>
+        );
+      }
     }
   };
 
@@ -222,7 +293,9 @@ const HomeScreen = () => {
             Orarul tau de astazi
           </Text>
           {/* Second flatlist */}
-          <ComponentaOrarSubFormaDeCarduri />
+            <ComponentaOrarSubFormaDeCarduri />
+
+          <ComponentaOrarDoarCursSubFormaDeCarduri />
         </View>
 
         {/* Header text + profile Icon*/}
