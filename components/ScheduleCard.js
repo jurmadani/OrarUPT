@@ -6,13 +6,25 @@ import { data } from "../AC-IS-Data";
 
 const ScheduleCard = ({ item, ora, esteCurs }) => {
   const [oraIncepereCurs, oraTerminareCurs] = ora.split("-");
+  const prescurtariMaterii = {
+    MTP: "Medii şi tehnologii de programare",
+    BD: "Baze de date",
+    SI: "Securitatea informatiei",
+    MSEI: "Modelare, simulare şi elemente de identificare",
+    TO: "Tehnici de optimizare",
+    SBMM: "Sisteme bazate pe microprocesoare şi microcontrolere",
+    Microeconomie: "Microeconomie",
+  };
 
-  if (esteCurs) {
-    let dataMaterieSuplimentara;
-    data.NUME_MATERII_ANUL2_AC_IS.MATERII.forEach((element) => {
+  let dataMaterieSuplimentara;
+  data.NUME_MATERII_ANUL2_AC_IS.MATERII.forEach((element) => {
+    if (esteCurs) {
       if (element.Nume === item.Materie) dataMaterieSuplimentara = element;
-    });
-  }
+    } else if (element.Nume === prescurtariMaterii[item.Materie])
+      dataMaterieSuplimentara = element;
+  });
+  
+
 
   return (
     <View style={styles.container}>
@@ -46,6 +58,10 @@ const ScheduleCard = ({ item, ora, esteCurs }) => {
             marginLeft: 22,
             marginTop: 10,
             borderRadius: 16,
+            shadowColor: "#171717",
+            shadowOffset: { width: 2, height: 3 },
+            shadowOpacity: 0.5,
+            shadowRadius: 3,
           }}
         >
           {/* Numele cursului */}
@@ -86,6 +102,7 @@ const ScheduleCard = ({ item, ora, esteCurs }) => {
               {item.Sala[0] === "A" ? "Corpul A Sala " + item.Sala : null}
               {item.Sala[0] === "B" ? "Corpul B Sala " + item.Sala : null}
               {item.Sala[0] === "D" ? "Corpul D Sala " + item.Sala : null}
+              {item.Sala[0] != 'A' && item.Sala[0] != 'B' && item.Sala[0] !='D' ? item.Sala : null}
             </Text>
           </View>
           {/* Profesor */}
@@ -106,9 +123,10 @@ const ScheduleCard = ({ item, ora, esteCurs }) => {
                 fontSize: 17,
                 marginLeft: 15,
                 marginTop: 10,
+                width:200,
               }}
             >
-              {item.Profesor}
+              {esteCurs ? item.Profesor : dataMaterieSuplimentara.ProfesoriLaborator[0]}
             </Text>
           </View>
           {/* Card-ul de categorie (seminar,curs,laborator) */}
@@ -119,7 +137,7 @@ const ScheduleCard = ({ item, ora, esteCurs }) => {
               margin: 5,
             }}
           >
-            <CategorieCurs tipCurs={esteCurs===true ? "Curs" : "null"} />
+            <CategorieCurs tipCurs={esteCurs ? "Curs" : item.Categorie} />
           </View>
         </View>
       </View>

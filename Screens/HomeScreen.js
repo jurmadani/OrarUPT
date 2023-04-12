@@ -8,7 +8,7 @@ import {
   ScrollView,
   FlatList,
 } from "react-native";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import useAuth from "../hooks/useAuth";
 import LottieView from "lottie-react-native";
 import { SafeAreaView } from "react-native";
@@ -38,18 +38,21 @@ const dayOfWeek = moment().format("dddd");
 const HomeScreen = () => {
   var { user } = useAuth();
   var numberOfTestsPassed = 0;
+  const [existaLaboratoareInZiuaRespectiva, setExistaLaboratoare] =
+    useState(true);
 
   const ComponentaOrarSubFormaDeCarduri = () => {
     if (zile[dayOfWeek] !== "sambata" && zile[dayOfWeek] !== "duminica") {
       try {
         const entriesLaboratoare = Object.entries(
           data.ANUL_II_SERIA_IS_SEM_II_2022_2023_LABORATOARE[zile[dayOfWeek]][
-            "3.1"
+            user?.grupa
           ]
         );
+        setExistaLaboratoare(true);
 
         return (
-          <View style={{ alignItems: "center", marginBottom:100 }}>
+          <View style={{ alignItems: "center", marginBottom: 100 }}>
             {/* Laboratoare */}
             <Text
               style={{
@@ -78,6 +81,7 @@ const HomeScreen = () => {
         );
       } catch (e) {
         console.log(e);
+        setExistaLaboratoare(false);
       }
     } else {
       // Dacă ziua este "sambata" sau "duminica", randează alt conținut
@@ -108,7 +112,13 @@ const HomeScreen = () => {
           data.ANUL_II_SERIA_IS_SEM_II_2022_2023_CURSURI[zile[dayOfWeek]]
         );
         return (
-          <View style={{ alignItems: "center", marginBottom: 100, marginTop:-100, }}>
+          <View
+            style={{
+              alignItems: "center",
+              marginBottom: 100,
+              marginTop: existaLaboratoareInZiuaRespectiva ? -100 : 0,
+            }}
+          >
             {/* Cursuri */}
             <Text
               style={{
@@ -160,7 +170,7 @@ const HomeScreen = () => {
       resizeMode="contain"
       style={styles.imageBackground}
     >
-      <ScrollView showsHorizontalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header message and profile picture icon*/}
         <View style={{ flexDirection: "row" }}>
           <Text
@@ -169,32 +179,14 @@ const HomeScreen = () => {
               color: "white",
               fontSize: 32,
               marginTop: 80,
-              width: windowHeight / 2 - 100,
+              width: 238,
               marginLeft: 20,
               zIndex: 3, // Set zIndex to control the stacking order
             }}
           >
-            Buna dimineata, Daniel👋
+            Buna dimineata, {user?.prenume}👋
           </Text>
-          <TouchableOpacity
-            style={styles.TouchableOpacityStyle}
-            onPress={() => console.log("Navigate to my profile")}
-          >
-            <Image
-              source={require("../assets/Images/DefaultProfilePicture.png")}
-              style={{
-                height: 53,
-                width: 53,
-                borderRadius: 112.5,
-                marginTop: 44,
-                zIndex: 3,
-                position: "absolute",
-                marginLeft: -20,
-              }}
-            />
-          </TouchableOpacity>
         </View>
-
         {/* globe animation*/}
         <LottieView
           source={require("../assets/Animations/globe.json")}
@@ -293,9 +285,11 @@ const HomeScreen = () => {
             Orarul tau de astazi
           </Text>
           {/* Second flatlist */}
+          <View>
             <ComponentaOrarSubFormaDeCarduri />
 
-          <ComponentaOrarDoarCursSubFormaDeCarduri />
+            <ComponentaOrarDoarCursSubFormaDeCarduri />
+          </View>
         </View>
 
         {/* Header text + profile Icon*/}
@@ -310,14 +304,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#2E3192",
-  },
-  TouchableOpacityStyle: {
-    alignItems: "center",
-    justifyContent: "center",
-    alignSelf: "flex-end",
-    marginBottom: 50,
-    marginRight: 50,
-    zIndex: 4,
   },
   imageBackground: {
     width: windowWidth, // Set width to window width or desired width

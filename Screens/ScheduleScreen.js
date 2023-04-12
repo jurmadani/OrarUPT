@@ -9,6 +9,9 @@ import { data } from "../AC-IS-Data";
 import ScheduleCard from "../components/ScheduleCard";
 import { ScrollView } from "react-native";
 import { TramRounded } from "@mui/icons-material";
+import { useEffect } from "react";
+import LottieView from "lottie-react-native";
+import useAuth from "../hooks/useAuth";
 
 const [day, month, year] = moment().format("DD/MM/YYYY ").split("/");
 const dayOfWeek = moment().format("dddd");
@@ -54,6 +57,13 @@ const ScheduleScreen = () => {
   const [pressedIndex, setPressedIndex] = useState(
     Object.keys(zile).indexOf(dayOfWeek)
   ); // initial state for pressed index
+  const [weekend, setWeekend] = useState(false);
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (pressedIndex == 5 || pressedIndex == 6) setWeekend(true);
+    else setWeekend(false);
+  }, [pressedIndex]);
 
   const renderItem = ({ item, index }) => {
     // function to render each item in FlatList
@@ -77,19 +87,47 @@ const ScheduleScreen = () => {
     );
   };
 
-  const ComponentaOrarDoarCursSubFormaDeCarduri = () => {
+  const ComponentaOrarDoarCursSubFormaDeCarduri = ({ marginBottomNeeded }) => {
     if (zile[dayOfWeek] !== "sambata" && zile[dayOfWeek] !== "duminica") {
       try {
-        const ziuaAleasa = zileArray[pressedIndex]
+        const ziuaAleasa = zileArray[pressedIndex];
         const entriesCursuri = Object.entries(
-          data.ANUL_II_SERIA_IS_SEM_II_2022_2023_CURSURI[ziuaAleasa.charAt(0).toLowerCase() + ziuaAleasa.slice(1)]
+          data.ANUL_II_SERIA_IS_SEM_II_2022_2023_CURSURI[
+            ziuaAleasa.charAt(0).toLowerCase() + ziuaAleasa.slice(1)
+          ]
         );
         return (
-          <View style={{ marginBottom: 250 }}>
+          <View style={{ marginBottom: marginBottomNeeded ? 250 : 0 }}>
             {/* Cursuri */}
 
             {entriesCursuri.map(([key, value]) => {
               return <ScheduleCard item={value} ora={key} esteCurs={true} />;
+            })}
+          </View>
+        );
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  };
+
+  const ComponentaOrarLaboratorSiSeminarSubFormaDeCarduri = ({
+    marginBottomNeeded,
+  }) => {
+    if (zile[dayOfWeek] !== "sambata" && zile[dayOfWeek] !== "duminica") {
+      try {
+        const ziuaAleasa = zileArray[pressedIndex];
+        const entriesLaboratoareSauSeminarii = Object.entries(
+          data.ANUL_II_SERIA_IS_SEM_II_2022_2023_LABORATOARE[
+            ziuaAleasa.charAt(0).toLowerCase() + ziuaAleasa.slice(1)
+          ][user?.grupa]
+        );
+        return (
+          <View style={{ marginBottom: marginBottomNeeded ? 250 : 0 }}>
+            {/* Cursuri */}
+
+            {entriesLaboratoareSauSeminarii.map(([key, value]) => {
+              return <ScheduleCard item={value} ora={key} esteCurs={false} />;
             })}
           </View>
         );
@@ -183,14 +221,44 @@ const ScheduleScreen = () => {
           }}
         />
         {/* Columns names */}
-        <View style={{ flexDirection: "row", marginTop: 10 }}>
-          <Text style={{ color: "#BCC1CD", marginLeft: 20, marginRight: 70 }}>
-            Ora
-          </Text>
-          <Text style={{ color: "#BCC1CD" }}>Curs</Text>
-        </View>
+        {!weekend && (
+          <View style={{ flexDirection: "row", marginTop: 10 }}>
+            <Text style={{ color: "#BCC1CD", marginLeft: 20, marginRight: 70 }}>
+              Ora
+            </Text>
+            <Text style={{ color: "#BCC1CD" }}>Curs</Text>
+          </View>
+        )}
+        {weekend && (
+          <View
+            style={{
+              width: windowWidth,
+              height: 400,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <LottieView
+              source={require("../assets/Animations/RelaxingManAnimation.json")}
+              autoPlay
+              loop
+              speed={0.3}
+              style={{
+                width: 300,
+                height: 300,
+              }}
+            />
+            <Text style={{ marginTop: 20, fontSize: 20, fontWeight: "bold" }}>
+              Nu ai ore in weekend
+            </Text>
+          </View>
+        )}
+
         <ScrollView showsVerticalScrollIndicator={false}>
-          <ComponentaOrarDoarCursSubFormaDeCarduri />
+          <ComponentaOrarDoarCursSubFormaDeCarduri marginBottomNeeded={false} />
+          <ComponentaOrarLaboratorSiSeminarSubFormaDeCarduri
+            marginBottomNeeded={true}
+          />
         </ScrollView>
       </View>
     </SafeAreaView>
