@@ -14,7 +14,7 @@ Stack screens order: Splash,Getting Started, Pre Login, Reguister, Setting-Up Pr
 const TabNavigator = () => {
   return (
     <Tab.Navigator
-      screenOptions={({route}) => ({
+      screenOptions={({ route }) => ({
         tabBarShowLabel: false,
         headerShown: false,
         tabBarStyle: {
@@ -23,21 +23,27 @@ const TabNavigator = () => {
           height: 90,
           borderRadius: 16,
         },
-        tabBarActiveTintColor:'#2E3192',
-        tabBarInactiveTintColor:'#5F5F5F',
+        tabBarActiveTintColor: "#2E3192",
+        tabBarInactiveTintColor: "#5F5F5F",
         tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
-            let rn = route.name;
-            if(rn === "HomeScreen")
-                iconName = focused ? 'home' : 'home-outline'
-            else if(rn === "Schedule")
-                iconName = focused ? 'calendar' : 'calendar-outline'
-            else if(rn === "Search")
-                iconName = focused ? 'search' : 'search-outline'
-            else if(rn === 'Profile')
-                iconName = focused ? 'person' : 'person-outline'
+          let iconName;
+          let rn = route.name;
+          if (rn === "HomeScreen") iconName = focused ? "home" : "home-outline";
+          else if (rn === "Schedule")
+            iconName = focused ? "calendar" : "calendar-outline";
+          else if (rn === "Search")
+            iconName = focused ? "search" : "search-outline";
+          else if (rn === "Profile")
+            iconName = focused ? "person" : "person-outline";
 
-            return <Ionicons name={iconName} size={size} color={color} style={{marginTop:7}}/>
+          return (
+            <Ionicons
+              name={iconName}
+              size={size}
+              color={color}
+              style={{ marginTop: 7 }}
+            />
+          );
         },
       })}
     >

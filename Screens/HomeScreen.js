@@ -229,7 +229,7 @@ const HomeScreen = () => {
             width: windowWidth,
             alignSelf: "center",
             marginTop: (windowHeight - 10) / 4.1,
-            zIndex: 0, // Set zIndex to control the stacking order
+            Index: 0, // Set zIndex to control the stacking order
             borderRadius: 32,
           }}
         >

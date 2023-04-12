@@ -300,7 +300,7 @@ const CreateProfileScreen = () => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <SafeAreaView style={styles.container}>
           <View style={{ flexDirection: "row", marginTop: 15 }}>
-            <TouchableOpacity onPress={() => navigation.replace("HomeScreen")}>
+            <TouchableOpacity onPress={() => navigation.replace("PreLogin")}>
               <Icon
                 name="arrowleft"
                 size={30}

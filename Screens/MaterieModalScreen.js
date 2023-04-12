@@ -48,7 +48,7 @@ const MaterieModalScreen = ({route}) => {
             style={{
               color: transparent ? "white" : 'black',
               fontWeight: "800",
-              fontSize: route.params.materie.Nume.length >= 46 ? 20 : 27,
+              fontSize: route.params.materie.Nume.length >= 46 ? 20 : 26,
               marginTop: 30,
               width: 200
          

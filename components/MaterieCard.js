@@ -4,11 +4,10 @@ import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 const MaterieCard = ({ item }) => {
-
   const navigation = useNavigation();
 
   return (
-    <View style={[styles.container, {backgroundColor:item.CardBackground}]}>
+    <View style={[styles.container, { backgroundColor: item.CardBackground }]}>
       <View style={{ flexDirection: "row" }}>
         <Image
           source={item.MaterieIcon}
@@ -23,7 +22,7 @@ const MaterieCard = ({ item }) => {
         />
         <TouchableOpacity
           onPress={() =>
-           navigation.navigate( 'MaterieInformatieModal', {materie: item})
+            navigation.navigate("MaterieInformatieModal", { materie: item })
           }
         >
           <Image
@@ -38,7 +37,11 @@ const MaterieCard = ({ item }) => {
           />
         </TouchableOpacity>
       </View>
-      <Text style={[styles.text,{fontSize: item.Nume.length >= 30 ? 14 : 18}]}>{item.Nume}</Text>
+      <Text
+        style={[styles.text, { fontSize: item.Nume.length >= 30 ? 14 : 18 }]}
+      >
+        {item.Nume}
+      </Text>
     </View>
   );
 };
