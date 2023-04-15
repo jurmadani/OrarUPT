@@ -49,7 +49,7 @@ const SearchScreen = () => {
           alignSelf: "center",
           justifyContent: "center",
           backgroundColor: "#F4F4F4",
-          borderRadius: 6,
+          borderRadius: 10,
           borderWidth: 1,
           borderColor: "#BABABA",
         }}
@@ -75,5 +75,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
+    marginBottom:100,
   },
 });

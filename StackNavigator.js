@@ -9,6 +9,7 @@ import CreateProfileScreen from "./Screens/CreateProfileScreen";
 import LoadingScreen from "./Screens/LoadingScreen";
 import BottomTabNavigator from "./BottomTabNavigator";
 import MaterieModalScreen from "./Screens/MaterieModalScreen";
+import OrarLaboratorMaterieDinSearchScreen from "./Screens/OrarLaboratorMaterieDinSearchScreen";
 
 const Stack = createNativeStackNavigator();
 /*
@@ -66,13 +67,7 @@ Stack screens order: Splash,GettingStarted, PreLogin, Reguister, Setting-Up Prof
 const StackNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        name="PreLogin"
-        component={PreLoginScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
+
       <Stack.Screen
         name="MainApp"
         component={BottomTabNavigator}
@@ -81,7 +76,13 @@ const StackNavigator = () => {
           gestureEnabled: false,
         }}
       />
-
+      <Stack.Screen
+        name="OrarLaboratorMaterie"
+        component={OrarLaboratorMaterieDinSearchScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
       <Stack.Screen
         name="MaterieInformatieModal"
         component={MaterieModalScreen}

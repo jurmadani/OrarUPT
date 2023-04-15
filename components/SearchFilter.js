@@ -8,9 +8,11 @@ import {
 } from "react-native";
 import React from "react";
 import { data } from "../AC-IS-Data";
+import { useNavigation } from "@react-navigation/native";
 
 const SearchFilter = ({ input }) => {
   const materiiData = data.NUME_MATERII_ANUL2_AC_IS.MATERII;
+  const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
@@ -42,7 +44,12 @@ const SearchFilter = ({ input }) => {
                 >
                   {item.Nume}
                 </Text>
-                <TouchableOpacity style={{ height: 40 }}>
+                <TouchableOpacity
+                  style={{ height: 40 }}
+                  onPress={() => {
+                    navigation.navigate("OrarLaboratorMaterie", {materie: item.Nume});
+                  }}
+                >
                   <Image
                     source={require("../assets/Images/components-images/RightArrowIcon.png")}
                     style={{
@@ -54,7 +61,9 @@ const SearchFilter = ({ input }) => {
                 </TouchableOpacity>
               </View>
             );
-          else if (item.Nume.toLowerCase().includes(input.toLowerCase())) {
+          /* Filters the data as the user types something in the search bar */ else if (
+            item.Nume.toLowerCase().includes(input.toLowerCase())
+          ) {
             return (
               <View
                 style={{
@@ -78,7 +87,12 @@ const SearchFilter = ({ input }) => {
                 >
                   {item.Nume}
                 </Text>
-                <TouchableOpacity style={{ height: 40 }}>
+                <TouchableOpacity
+                  style={{ height: 40 }}
+                  onPress={() => {
+                    navigation.navigate("OrarLaboratorMaterie");
+                  }}
+                >
                   <Image
                     source={require("../assets/Images/components-images/RightArrowIcon.png")}
                     style={{
