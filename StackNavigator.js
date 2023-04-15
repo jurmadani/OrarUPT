@@ -67,7 +67,13 @@ Stack screens order: Splash,GettingStarted, PreLogin, Reguister, Setting-Up Prof
 const StackNavigator = () => {
   return (
     <Stack.Navigator>
-
+      <Stack.Screen
+        name="PreLogin"
+        component={PreLoginScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
       <Stack.Screen
         name="MainApp"
         component={BottomTabNavigator}

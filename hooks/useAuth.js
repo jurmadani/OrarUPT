@@ -58,7 +58,7 @@ export const AuthProvider = ({ children }) => {
           profilePictureURL: user.profilePictureURL,
           profileIsSet: user.profileIsSet,
           authProvider: user.authProvider,
-          userAppleUID: user.userAppleUID,
+          userAppleUID: credential.user,
         });
         if (user.profileIsSet === "true") {
           console.log("User logged in via Apple Login successfully");
