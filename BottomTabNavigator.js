@@ -50,7 +50,7 @@ const TabNavigator = () => {
       <Tab.Screen name="HomeScreen" component={HomeScreen} />
       <Tab.Screen name="Schedule" component={ScheduleScreen} />
       <Tab.Screen name="Search" component={SearchScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen name="Profile" component={ProfileScreen}/>
     </Tab.Navigator>
   );
 };

@@ -10,6 +10,7 @@ import LoadingScreen from "./Screens/LoadingScreen";
 import BottomTabNavigator from "./BottomTabNavigator";
 import MaterieModalScreen from "./Screens/MaterieModalScreen";
 import OrarLaboratorMaterieDinSearchScreen from "./Screens/OrarLaboratorMaterieDinSearchScreen";
+import AboutScreen from "./Screens/AboutScreen";
 
 const Stack = createNativeStackNavigator();
 /*
@@ -80,6 +81,7 @@ const StackNavigator = () => {
         options={{
           headerShown: false,
           gestureEnabled: false,
+          
         }}
       />
       <Stack.Screen
@@ -88,6 +90,10 @@ const StackNavigator = () => {
         options={{
           headerShown: false,
         }}
+      />
+         <Stack.Screen
+        name="Despre"
+        component={AboutScreen}
       />
       <Stack.Screen
         name="MaterieInformatieModal"

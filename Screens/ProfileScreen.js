@@ -6,6 +6,7 @@ import { ScrollView } from "react-native";
 import { TouchableOpacity } from "react-native";
 import { firebase } from "../firebase";
 import * as ImagePicker from "expo-image-picker";
+import { useNavigation } from "@react-navigation/core";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -81,6 +82,7 @@ const windowHeight = Dimensions.get("window").height;
 const ProfileScreen = () => {
   const { user } = useAuth();
   const [image, setImage] = useState(null);
+  const navigation = useNavigation();
 
   useEffect(() => {
     if (image != null) {
@@ -263,10 +265,10 @@ const ProfileScreen = () => {
               <TouchableOpacity
                 style={{ height: 55, justifyContent: "center" }}
                 onPress={() => {
-                  console.log("butonul 2 apasat");
+                  navigation.navigate('Despre')
                 }}
               >
-                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <View style={{ flexDirection: "row", alignItems: "center",height:55 }}>
                   <Image
                     source={require("../assets/Images/components-images/InformationIcon.png")}
                     style={{
@@ -318,7 +320,7 @@ const ProfileScreen = () => {
                   console.log("butonul 2 apasat");
                 }}
               >
-                <View style={{ flexDirection: "row" }}>
+                <View style={{ flexDirection: "row",height:55, }}>
                   <Image
                     source={require("../assets/Images/components-images/ExitIcon.png")}
                     style={{
@@ -326,6 +328,7 @@ const ProfileScreen = () => {
                       width: 25,
                       tintColor: "white",
                       marginLeft: 20,
+                      marginTop:15,
                     }}
                   />
                   <Text
@@ -334,6 +337,7 @@ const ProfileScreen = () => {
                       color: "white",
                       fontSize: 18,
                       marginLeft: 15,
+                      marginTop:15,
                     }}
                   >
                     Iesi din cont
