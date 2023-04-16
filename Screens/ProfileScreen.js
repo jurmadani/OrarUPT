@@ -349,6 +349,7 @@ const ProfileScreen = () => {
                       width: 20,
                       tintColor: "white",
                       marginLeft: 180,
+                      marginTop:15,
                     }}
                   />
                 </View>

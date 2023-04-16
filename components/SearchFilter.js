@@ -18,16 +18,18 @@ const SearchFilter = ({ input }) => {
     <View style={styles.container}>
       <FlatList
         data={materiiData}
-        renderItem={({ item }) => {
+        renderItem={({ item,index   }) => {
+          console.log(materiiData.length-1, index)
           /* If the user didn't put any input in the search bar we are not gonna filter the list, and display all the data */
           if (input === "")
             return (
               <View
                 style={{
-                  marginVertical: 25,
+                  marginVertical: 15,
                   justifyContent: "flex-start",
                   alignItems: "center",
                   flexDirection: "row",
+                  marginBottom: materiiData.length-1 === index ? 100 : 25,
                 }}
               >
                 <Image
