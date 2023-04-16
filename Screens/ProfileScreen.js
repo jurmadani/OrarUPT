@@ -10,6 +10,74 @@ import * as ImagePicker from "expo-image-picker";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
+ const SiglaAC = () => (
+    <Image
+      source={require("../assets/Images/SigleFacultati/AC-Sigla.png")}
+      style={{ width: 45, height: 27, marginLeft: 10 }}
+    />
+  );
+
+  const SiglaFAUT = () => (
+    <Image
+      source={require("../assets/Images/SigleFacultati/FAUT-Sigla.png")}
+      style={{ width: 45, height: 39, marginLeft: 10 }}
+    />
+  );
+  const SiglaChimie = () => (
+    <Image
+      source={require("../assets/Images/SigleFacultati/Chimie-Sigla.png")}
+      style={{ width: 45, height: 39, marginLeft: 10 }}
+    />
+  );
+  const SiglaConstructii = () => (
+    <Image
+      source={require("../assets/Images/SigleFacultati/Constructii-Sigla.png")}
+      style={{ width: 45, height: 39, marginLeft: 10 }}
+    />
+  );
+  const SiglaETcTi = () => (
+    <Image
+      source={require("../assets/Images/SigleFacultati/ETcTi-Sigla.png")}
+      style={{ width: 45, height: 39, marginLeft: 10 }}
+    />
+  );
+  const SiglaEE = () => (
+    <Image
+      source={require("../assets/Images/SigleFacultati/EE-Sigla.png")}
+      style={{ width: 45, height: 39, marginLeft: 10 }}
+    />
+  );
+  const SiglaMPT = () => (
+    <Image
+      source={require("../assets/Images/SigleFacultati/MPT-Sigla.png")}
+      style={{ width: 45, height: 39, marginLeft: 10 }}
+    />
+  );
+  const SiglaMecanica = () => (
+    <Image
+      source={require("../assets/Images/SigleFacultati/Mecanica-Sigla.png")}
+      style={{ width: 45, height: 39, marginLeft: 10 }}
+    />
+  );
+  const SiglaSC = () => (
+    <Image
+      source={require("../assets/Images/SigleFacultati/SC-Sigla.png")}
+      style={{ width: 45, height: 39, marginLeft: 10 }}
+    />
+  );
+
+  const facultati ={
+    "Arhitectura si Urbanism" : SiglaFAUT,
+    "Automatica si Calculatoare" : SiglaAC,
+    "Chimie Industriala si Ingineria Mediului" : SiglaChimie,
+    "Constructii" : SiglaConstructii,
+    "Electronica, Telecomunicatii si Tehnologii Informationale": SiglaETcTi,
+    "Electrotehnica si Electroenergetica" : SiglaEE,
+    "Management in Productie si Transporturi" : SiglaMPT,
+    "Mecanica" : SiglaMecanica,
+    "Stiinte ale Comunicarii" : SiglaSC
+  }
+
 const ProfileScreen = () => {
   const { user } = useAuth();
   const [image, setImage] = useState(null);
@@ -59,8 +127,6 @@ const ProfileScreen = () => {
       quality: 1,
     });
 
-    console.log(result);
-
     if (!result.canceled) {
       setImage(result.assets[0].uri);
     }
@@ -68,7 +134,7 @@ const ProfileScreen = () => {
 
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <View>
         {/* The view is divided in 2 parts, the first one is the profile picture taking half of the screen height, and it's blurred */}
         {/* The blurred background profile picture */}
 
@@ -115,7 +181,7 @@ const ProfileScreen = () => {
         <View
           style={{
             position: "absolute",
-            zIndex: 1,
+            zIndex: 3,
             width: windowWidth,
             height: windowHeight / 2 - 110,
             justifyContent: "center",
@@ -295,14 +361,37 @@ const ProfileScreen = () => {
             height: windowHeight,
             justifyContent: "center",
             alignItems: "center",
-            marginTop: 20,
+            marginTop: 150,
           }}
         >
-          <Text>Informatii despre user</Text>
+          {/* Header text */}
+          <Text style={{fontWeight:'bold',fontSize:30}}>Informatii</Text>
+          {/* Divider bar */}
+          <View style={{height:1,width:windowWidth-50,backgroundColor:'#A5A5A5', marginTop:20,}}/>
+          {/* Primul row cu informatii: Sigla facultate + Specializare */}
+          <View style={{flexDirection:'row',marginTop:20,}}>
+          {facultati[user.facultate]()}
+          <Text style={{fontSize:17, marginLeft:10,marginBottom:20}}>
+            Specializare: {user.specializare}
+          </Text>
+          </View>
+           {/* Divider bar */}
+            <View style={{height:1,width:windowWidth-50,backgroundColor:'#A5A5A5', marginTop:5,}}/>
+           {/* Al doilea row cu informatie: Anul */}
+           <Text style={{fontSize:17,marginTop:20,marginBottom:20,}}>
+            Anul {user.an}
+           </Text>
+            {/* Divider bar */}
+            <View style={{height:1,width:windowWidth-50,backgroundColor:'#A5A5A5', marginTop:5,}}/>
+            {/* Al treilea row cu informatie: Grupa */}
+           <Text style={{fontSize:17,marginTop:20,marginBottom:20,}}>
+            Grupa {user.grupa}
+           </Text>
+
         </View>
-      </ScrollView>
+      </View>
     </View>
-  );
+  ); 
 };
 
 export default ProfileScreen;
