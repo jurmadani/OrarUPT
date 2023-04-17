@@ -104,7 +104,7 @@ const LoginScreen = () => {
         <Button style={styles.button}>Conecteaza-te</Button>
       </TouchableOpacity>
 
-      <Button appearance="ghost" style={{ marginBottom: 120 }}>
+      <Button appearance="ghost" style={{ marginBottom: 120 }} onPress={() => navigation.navigate('ForgotPassword')}>
         Ai uitat parola?
       </Button>
     </SafeAreaView>

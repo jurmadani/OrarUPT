@@ -13,6 +13,7 @@ import OrarLaboratorMaterieDinSearchScreen from "./Screens/OrarLaboratorMaterieD
 import AboutScreen from "./Screens/AboutScreen";
 import SplashScreen_v2 from "./Screens/SplashScreen_v2";
 import OnBoardingScreen_v2 from "./Screens/OnBoardingScreen_v2";
+import ForgotPasswordScreen from "./Screens/ForgotPasswordScreen";
 
 const Stack = createNativeStackNavigator();
 /*
@@ -123,6 +124,13 @@ const StackNavigator = () => {
       <Stack.Screen
         name="Login"
         component={LoginScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="ForgotPassword"
+        component={ForgotPasswordScreen}
         options={{
           headerShown: false,
         }}

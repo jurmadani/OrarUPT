@@ -134,10 +134,7 @@ export const AuthProvider = ({ children }) => {
               profileIsSet: "false",
               authProvider: "studentEmail",
             });
-            console.log(
-              user,
-              "User is good, navigating to creating profile screen..."
-            );
+            navigation.navigate("Setting-Up Profile");
           }
         },
         login: async (email, password) => {
@@ -190,6 +187,16 @@ export const AuthProvider = ({ children }) => {
         loginViaApple: handleSignInApple, // Function for signing in with Apple authentication
         loginViaGoogle: handleSignInGoogle, // Function for signing in with Google authentication
         loginViaFacebook: handleSignInFacebook, // Function for signing in with Facebook authentication
+        changePassword: async (userEmail) => {
+          firebase
+            .auth()
+            .sendPasswordResetEmail(userEmail)
+            .then(() => {
+              Alert.alert("Password reset email sent");
+              navigation.navigate("Login");
+            })
+            .catch((error) => Alert.alert("Email-ul nu exista sau este invalid"));
+        },
       }}
     >
       {children}
