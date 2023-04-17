@@ -13,7 +13,7 @@ export default class SplashScreen_v2 extends React.Component {
 
   componentDidMount() {
     Animated.timing(this.state.loadingProgress, {
-      toValue: 100,
+      toValue: 35,
       duration: 1000,
       useNativeDriver: true,
       delay: 700,
@@ -28,6 +28,7 @@ export default class SplashScreen_v2 extends React.Component {
   }
 
   render() {
+
     const imageScale = {
       transform: [
         {

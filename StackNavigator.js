@@ -12,6 +12,7 @@ import MaterieModalScreen from "./Screens/MaterieModalScreen";
 import OrarLaboratorMaterieDinSearchScreen from "./Screens/OrarLaboratorMaterieDinSearchScreen";
 import AboutScreen from "./Screens/AboutScreen";
 import SplashScreen_v2 from "./Screens/SplashScreen_v2";
+import OnBoardingScreen_v2 from "./Screens/OnBoardingScreen_v2";
 
 const Stack = createNativeStackNavigator();
 /*
@@ -105,7 +106,7 @@ const StackNavigator = () => {
       />
       <Stack.Screen
         name="Getting Started"
-        component={OnBoardingScreen}
+        component={OnBoardingScreen_v2}
         options={{
           headerShown: false,
           gestureEnabled:false,
@@ -116,6 +117,7 @@ const StackNavigator = () => {
         component={PreLoginScreen}
         options={{
           headerShown: false,
+          gestureEnabled:false
         }}
       />
       <Stack.Screen

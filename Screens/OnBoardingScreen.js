@@ -10,26 +10,25 @@ const slides = [
     id: 1,
     title: "Bine ai venit",
     description: "Orare UPT este aplicatia perfecta pentru studenti ",
-    animation: require("../assets/Animations/OnBoardingAnimationPage1.json")
+    animation: require("../assets/Animations/OnBoardingAnimationPage1.json"),
   },
   {
     id: 2,
     title: "Verifica-ti orarul",
     description:
       "Primeste notificari despre cursurile din ziua curenta si in ce sala se tin ele si fii mereu la curent cu orarul",
-    animation: require("../assets/Animations/OnBoardingAnimationPage2.json")
+    animation: require("../assets/Animations/OnBoardingAnimationPage2.json"),
   },
   {
     id: 3,
     title: "Hai sa incepem",
     description:
-      "Pentru a începe să folosești aplicația, autentifică-te cu contul de student",
-    animation: require("../assets/Animations/OnBoardingAnimationPage3.json")
+      "Pentru a începe să folosești aplicația, autentifică-te cu contul de student sau prin celelalte metode",
+    animation: require("../assets/Animations/OnBoardingAnimationPage3.json"),
   },
 ];
 
 const OnBoardingScreen = () => {
-
   const navigate = useNavigation();
 
   buttonLabel = (label) => {
@@ -54,6 +53,7 @@ const OnBoardingScreen = () => {
   return (
     <AppIntroSlider
       data={slides}
+      style={{ backgroundColor: "#2E3192" }}
       renderItem={({ item }) => {
         return (
           <View
@@ -61,7 +61,7 @@ const OnBoardingScreen = () => {
               flex: 1,
               alignItems: "center",
               padding: 15,
-              paddingTop: 100,
+              paddingTop: item.id === 2 ? 180: 100,
             }}
           >
             <LottieView
@@ -74,25 +74,37 @@ const OnBoardingScreen = () => {
               autoPlay
               loop
             />
-            <Text
+            <View
               style={{
-                fontWeight: "bold",
-                color: COLORS.title,
-                paddingTop: item.id != 2 ? 45: 125,
-                fontSize: 35,
+                backgroundColor: "white",
+                height: SIZES.height,
+                width: SIZES.width,
+                alignItems: "center",
+                borderTopLeftRadius: 30,
+                borderTopRightRadius: 30,
               }}
             >
-              {item.title}
-            </Text>
-            <Text
-              style={{
-                textAlign: "center",
-                paddingTop: 9,
-                color: COLORS.title,
-              }}
-            >
-              {item.description}
-            </Text>
+              <Text
+                style={{
+                  fontWeight: "bold",
+                  color: COLORS.title,
+                  paddingTop: item.id != 2 ? 45 : 45,
+                  fontSize: 35,
+                }}
+              >
+                {item.title}
+              </Text>
+              <Text
+                style={{
+                  textAlign: "center",
+                  paddingTop: 9,
+                  color: COLORS.title,
+                  width:SIZES.width - 30,
+                }}
+              >
+                {item.description}
+              </Text>
+            </View>
           </View>
         );
       }}

@@ -84,6 +84,7 @@ const ProfileScreen = () => {
   const [image, setImage] = useState(null);
   const navigation = useNavigation();
 
+ 
   useEffect(() => {
     if (image != null) {
       const InsertPictureIntoFirebase = async () => {
@@ -100,7 +101,7 @@ const ProfileScreen = () => {
     await firebase
       .firestore()
       .collection("Users")
-      .doc(user.userAppleUID)
+      .doc(user.authProvider === "Apple" ? user.userAppleUID : user.email)
       .update({
         profilePictureURL: url,
       });

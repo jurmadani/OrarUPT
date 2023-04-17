@@ -26,7 +26,7 @@ import useAuth from "../hooks/useAuth";
 
 const RegisterByEmailScreen = () => {
   const navigation = useNavigation();
-  const { register, user } = useAuth();
+  const { register, user, loginViaGoogle, loginViaApple, loginViaFacebook } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isStudent, setIsStudent] = useState(false);
@@ -193,21 +193,21 @@ const RegisterByEmailScreen = () => {
             flexDirection: "row",
           }}
         >
-          <TouchableOpacity style={styles.TouchableOpacityStyle}>
+          <TouchableOpacity style={styles.TouchableOpacityStyle} onPress={loginViaFacebook}>
             <Image
               source={FacebookSVG}
               resizeMode="contain"
               style={styles.svgIconStyle}
             />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.TouchableOpacityStyle}>
+          <TouchableOpacity style={styles.TouchableOpacityStyle} onPress={loginViaGoogle}>
             <Image
               source={GoogleSVG}
               resizeMode="contain"
               style={styles.svgIconStyle}
             />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.TouchableOpacityStyle}>
+          <TouchableOpacity style={styles.TouchableOpacityStyle} onPress={loginViaApple}>
             <Image
               source={AppleSVG}
               resizeMode="contain"
