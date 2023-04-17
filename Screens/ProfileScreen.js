@@ -11,76 +11,76 @@ import { useNavigation } from "@react-navigation/core";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
- const SiglaAC = () => (
-    <Image
-      source={require("../assets/Images/SigleFacultati/AC-Sigla.png")}
-      style={{ width: 45, height: 27, marginLeft: 10 }}
-    />
-  );
+const SiglaAC = () => (
+  <Image
+    source={require("../assets/Images/SigleFacultati/AC-Sigla.png")}
+    style={{ width: 45, height: 27, marginLeft: 10 }}
+  />
+);
 
-  const SiglaFAUT = () => (
-    <Image
-      source={require("../assets/Images/SigleFacultati/FAUT-Sigla.png")}
-      style={{ width: 45, height: 39, marginLeft: 10 }}
-    />
-  );
-  const SiglaChimie = () => (
-    <Image
-      source={require("../assets/Images/SigleFacultati/Chimie-Sigla.png")}
-      style={{ width: 45, height: 39, marginLeft: 10 }}
-    />
-  );
-  const SiglaConstructii = () => (
-    <Image
-      source={require("../assets/Images/SigleFacultati/Constructii-Sigla.png")}
-      style={{ width: 45, height: 39, marginLeft: 10 }}
-    />
-  );
-  const SiglaETcTi = () => (
-    <Image
-      source={require("../assets/Images/SigleFacultati/ETcTi-Sigla.png")}
-      style={{ width: 45, height: 39, marginLeft: 10 }}
-    />
-  );
-  const SiglaEE = () => (
-    <Image
-      source={require("../assets/Images/SigleFacultati/EE-Sigla.png")}
-      style={{ width: 45, height: 39, marginLeft: 10 }}
-    />
-  );
-  const SiglaMPT = () => (
-    <Image
-      source={require("../assets/Images/SigleFacultati/MPT-Sigla.png")}
-      style={{ width: 45, height: 39, marginLeft: 10 }}
-    />
-  );
-  const SiglaMecanica = () => (
-    <Image
-      source={require("../assets/Images/SigleFacultati/Mecanica-Sigla.png")}
-      style={{ width: 45, height: 39, marginLeft: 10 }}
-    />
-  );
-  const SiglaSC = () => (
-    <Image
-      source={require("../assets/Images/SigleFacultati/SC-Sigla.png")}
-      style={{ width: 45, height: 39, marginLeft: 10 }}
-    />
-  );
+const SiglaFAUT = () => (
+  <Image
+    source={require("../assets/Images/SigleFacultati/FAUT-Sigla.png")}
+    style={{ width: 45, height: 39, marginLeft: 10 }}
+  />
+);
+const SiglaChimie = () => (
+  <Image
+    source={require("../assets/Images/SigleFacultati/Chimie-Sigla.png")}
+    style={{ width: 45, height: 39, marginLeft: 10 }}
+  />
+);
+const SiglaConstructii = () => (
+  <Image
+    source={require("../assets/Images/SigleFacultati/Constructii-Sigla.png")}
+    style={{ width: 45, height: 39, marginLeft: 10 }}
+  />
+);
+const SiglaETcTi = () => (
+  <Image
+    source={require("../assets/Images/SigleFacultati/ETcTi-Sigla.png")}
+    style={{ width: 45, height: 39, marginLeft: 10 }}
+  />
+);
+const SiglaEE = () => (
+  <Image
+    source={require("../assets/Images/SigleFacultati/EE-Sigla.png")}
+    style={{ width: 45, height: 39, marginLeft: 10 }}
+  />
+);
+const SiglaMPT = () => (
+  <Image
+    source={require("../assets/Images/SigleFacultati/MPT-Sigla.png")}
+    style={{ width: 45, height: 39, marginLeft: 10 }}
+  />
+);
+const SiglaMecanica = () => (
+  <Image
+    source={require("../assets/Images/SigleFacultati/Mecanica-Sigla.png")}
+    style={{ width: 45, height: 39, marginLeft: 10 }}
+  />
+);
+const SiglaSC = () => (
+  <Image
+    source={require("../assets/Images/SigleFacultati/SC-Sigla.png")}
+    style={{ width: 45, height: 39, marginLeft: 10 }}
+  />
+);
 
-  const facultati ={
-    "Arhitectura si Urbanism" : SiglaFAUT,
-    "Automatica si Calculatoare" : SiglaAC,
-    "Chimie Industriala si Ingineria Mediului" : SiglaChimie,
-    "Constructii" : SiglaConstructii,
-    "Electronica, Telecomunicatii si Tehnologii Informationale": SiglaETcTi,
-    "Electrotehnica si Electroenergetica" : SiglaEE,
-    "Management in Productie si Transporturi" : SiglaMPT,
-    "Mecanica" : SiglaMecanica,
-    "Stiinte ale Comunicarii" : SiglaSC
-  }
+const facultati = {
+  "Arhitectura si Urbanism": SiglaFAUT,
+  "Automatica si Calculatoare": SiglaAC,
+  "Chimie Industriala si Ingineria Mediului": SiglaChimie,
+  Constructii: SiglaConstructii,
+  "Electronica, Telecomunicatii si Tehnologii Informationale": SiglaETcTi,
+  "Electrotehnica si Electroenergetica": SiglaEE,
+  "Management in Productie si Transporturi": SiglaMPT,
+  Mecanica: SiglaMecanica,
+  "Stiinte ale Comunicarii": SiglaSC,
+};
 
 const ProfileScreen = () => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const [image, setImage] = useState(null);
   const navigation = useNavigation();
 
@@ -265,10 +265,16 @@ const ProfileScreen = () => {
               <TouchableOpacity
                 style={{ height: 55, justifyContent: "center" }}
                 onPress={() => {
-                  navigation.navigate('Despre')
+                  navigation.navigate("Despre");
                 }}
               >
-                <View style={{ flexDirection: "row", alignItems: "center",height:55 }}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    height: 55,
+                  }}
+                >
                   <Image
                     source={require("../assets/Images/components-images/InformationIcon.png")}
                     style={{
@@ -316,11 +322,9 @@ const ProfileScreen = () => {
             >
               <TouchableOpacity
                 style={{ height: 55, justifyContent: "center" }}
-                onPress={() => {
-                  console.log("butonul 2 apasat");
-                }}
+                onPress={logout}
               >
-                <View style={{ flexDirection: "row",height:55, }}>
+                <View style={{ flexDirection: "row", height: 55 }}>
                   <Image
                     source={require("../assets/Images/components-images/ExitIcon.png")}
                     style={{
@@ -328,7 +332,7 @@ const ProfileScreen = () => {
                       width: 25,
                       tintColor: "white",
                       marginLeft: 20,
-                      marginTop:15,
+                      marginTop: 15,
                     }}
                   />
                   <Text
@@ -337,7 +341,7 @@ const ProfileScreen = () => {
                       color: "white",
                       fontSize: 18,
                       marginLeft: 15,
-                      marginTop:15,
+                      marginTop: 15,
                     }}
                   >
                     Iesi din cont
@@ -349,7 +353,7 @@ const ProfileScreen = () => {
                       width: 20,
                       tintColor: "white",
                       marginLeft: 180,
-                      marginTop:15,
+                      marginTop: 15,
                     }}
                   />
                 </View>
@@ -370,33 +374,53 @@ const ProfileScreen = () => {
           }}
         >
           {/* Header text */}
-          <Text style={{fontWeight:'bold',fontSize:30}}>Informatii</Text>
+          <Text style={{ fontWeight: "bold", fontSize: 30 }}>Informatii</Text>
           {/* Divider bar */}
-          <View style={{height:1,width:windowWidth-50,backgroundColor:'#A5A5A5', marginTop:20,}}/>
+          <View
+            style={{
+              height: 1,
+              width: windowWidth - 50,
+              backgroundColor: "#A5A5A5",
+              marginTop: 20,
+            }}
+          />
           {/* Primul row cu informatii: Sigla facultate + Specializare */}
-          <View style={{flexDirection:'row',marginTop:20,}}>
-          {facultati[user.facultate]()}
-          <Text style={{fontSize:17, marginLeft:10,marginBottom:20}}>
-            Specializare: {user.specializare}
-          </Text>
+          <View style={{ flexDirection: "row", marginTop: 20 }}>
+            {facultati[user.facultate]()}
+            <Text style={{ fontSize: 17, marginLeft: 10, marginBottom: 20 }}>
+              Specializare: {user.specializare}
+            </Text>
           </View>
-           {/* Divider bar */}
-            <View style={{height:1,width:windowWidth-50,backgroundColor:'#A5A5A5', marginTop:5,}}/>
-           {/* Al doilea row cu informatie: Anul */}
-           <Text style={{fontSize:17,marginTop:20,marginBottom:20,}}>
+          {/* Divider bar */}
+          <View
+            style={{
+              height: 1,
+              width: windowWidth - 50,
+              backgroundColor: "#A5A5A5",
+              marginTop: 5,
+            }}
+          />
+          {/* Al doilea row cu informatie: Anul */}
+          <Text style={{ fontSize: 17, marginTop: 20, marginBottom: 20 }}>
             Anul {user.an}
-           </Text>
-            {/* Divider bar */}
-            <View style={{height:1,width:windowWidth-50,backgroundColor:'#A5A5A5', marginTop:5,}}/>
-            {/* Al treilea row cu informatie: Grupa */}
-           <Text style={{fontSize:17,marginTop:20,marginBottom:20,}}>
+          </Text>
+          {/* Divider bar */}
+          <View
+            style={{
+              height: 1,
+              width: windowWidth - 50,
+              backgroundColor: "#A5A5A5",
+              marginTop: 5,
+            }}
+          />
+          {/* Al treilea row cu informatie: Grupa */}
+          <Text style={{ fontSize: 17, marginTop: 20, marginBottom: 20 }}>
             Grupa {user.grupa}
-           </Text>
-
+          </Text>
         </View>
       </View>
     </View>
-  ); 
+  );
 };
 
 export default ProfileScreen;

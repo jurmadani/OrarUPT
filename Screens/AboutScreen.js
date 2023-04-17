@@ -56,7 +56,7 @@ const AboutScreen = () => {
           de cursuri într-un mod eficient și comod.
         </Text>
         {/* Text block 3 */}
-        <View style={{alignItems:'center'}}>
+        <View style={{alignItems:'center',marginBottom:30,}}>
           <Text
             style={{
               fontSize: 17,

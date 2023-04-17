@@ -10,7 +10,7 @@ import useAuth from "../hooks/useAuth";
 
 const LoginScreen = () => {
   const navigation = useNavigation();
-  const {loginViaApple, loginViaGoogle,loginViaFacebook} = useAuth();
+  const {loginViaApple, loginViaGoogle,loginViaFacebook,user} = useAuth();
 
   return (
     <SafeAreaView style={styles.container}>

@@ -1,3 +1,4 @@
+// Importing necessary modules and dependencies
 import { View, Text, Alert } from "react-native";
 import React, { useState } from "react";
 import { useContext } from "react";
@@ -6,24 +7,31 @@ import { firebase } from "../firebase";
 import { useNavigation } from "@react-navigation/native";
 import * as AppleAuthentication from "expo-apple-authentication";
 
+// Creating a context for authentication
 const AuthContext = createContext({});
 
+// Exporting the AuthProvider component to be used as a wrapper around the application
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const navigation = useNavigation();
+  const [user, setUser] = useState(null); // State for storing user information
+  const navigation = useNavigation(); // Hook for navigation
 
+  // Function to update user information
   const updateUser = (newUser) => {
     setUser(newUser);
   };
 
+  // Function for handling sign-in with Apple
   const handleSignInApple = async () => {
     try {
+      // Requesting user data from Apple Authentication
       const credential = await AppleAuthentication.refreshAsync({
         requestedScopes: [
           AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
           AppleAuthentication.AppleAuthenticationScope.EMAIL,
         ],
       });
+
+      // If user's email is available, create a new user object and navigate to profile creation screen
       if (credential.email != null) {
         setUser({
           email: credential.email,
@@ -39,7 +47,9 @@ export const AuthProvider = ({ children }) => {
           userAppleUID: credential.user,
         });
         navigation.navigate("CreateProfileScreen");
-      } else {
+      }
+      // If email is not available, fetch user data from Firestore and navigate to appropriate screen
+      else {
         const user = (
           await firebase
             .firestore()
@@ -70,18 +80,39 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const handleSignInGoogle = () => {
-    Alert.alert("Google sign-in temporarly unavailable");
+  // Function for handling sign-out
+  const handleSignOut = () => {
+    Alert.alert("Doresti sa te deconectezi?", "", [
+      {
+        text: "Anuleaza",
+      },
+      {
+        text: "Da",
+        onPress: () => {
+          navigation.navigate("PreLogin");
+          updateUser(null);
+        },
+      },
+    ]);
   };
 
-  const handleSignInFacebook = async () => {
-    Alert.alert("Facebook sign-in temporarly unavailable");
+  // Function for handling sign-in with Google (currently unavailable)
+  const handleSignInGoogle = () => {
+    Alert.alert("Google sign-in temporarily unavailable");
   };
+
+  // Function for handling sign-in with Facebook (currently unavailable)
+  const handleSignInFacebook = async () => {
+    Alert.alert("Facebook sign-in temporarily unavailable");
+  };
+
+  // Wrapping the application with the AuthContext.Provider and providing necessary values and functions
 
   return (
     <AuthContext.Provider
       value={{
         register: async (email, password) => {
+          // Function for registering a new user with email and password
           var okToProcedeFurher = true;
           await firebase
             .auth()
@@ -110,6 +141,7 @@ export const AuthProvider = ({ children }) => {
           }
         },
         login: async (email, password) => {
+          // Function for logging in with email and password
           await firebase
             .auth()
             .signInWithEmailAndPassword(email, password)
@@ -152,11 +184,12 @@ export const AuthProvider = ({ children }) => {
               console.log(errorCode);
             });
         },
-        user: user,
-        updateUser: updateUser,
-        loginViaApple: handleSignInApple,
-        loginViaGoogle: handleSignInGoogle,
-        loginViaFacebook: handleSignInFacebook,
+        logout: handleSignOut, // Function for logging out
+        user: user, // Current user object
+        updateUser: updateUser, // Function for updating user object
+        loginViaApple: handleSignInApple, // Function for signing in with Apple authentication
+        loginViaGoogle: handleSignInGoogle, // Function for signing in with Google authentication
+        loginViaFacebook: handleSignInFacebook, // Function for signing in with Facebook authentication
       }}
     >
       {children}

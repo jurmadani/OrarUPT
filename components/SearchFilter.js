@@ -19,7 +19,6 @@ const SearchFilter = ({ input }) => {
       <FlatList
         data={materiiData}
         renderItem={({ item,index   }) => {
-          console.log(materiiData.length-1, index)
           /* If the user didn't put any input in the search bar we are not gonna filter the list, and display all the data */
           if (input === "")
             return (
