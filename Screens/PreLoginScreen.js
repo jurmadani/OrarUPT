@@ -10,7 +10,7 @@ import useAuth from "../hooks/useAuth";
 
 const LoginScreen = () => {
   const navigation = useNavigation();
-  const {loginViaApple, loginViaGoogle,loginViaFacebook,user} = useAuth();
+  const { loginViaApple, loginViaGoogle, loginViaFacebook, user } = useAuth();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -20,7 +20,11 @@ const LoginScreen = () => {
       />
       <Text style={styles.headerText}>Hai sa incepem</Text>
 
-      <TouchableOpacity style={styles.TouchableOpacityStyle} onPress={loginViaFacebook}>
+      {/* Login with Facebook */}
+      <TouchableOpacity
+        style={styles.TouchableOpacityStyle}
+        onPress={loginViaFacebook}
+      >
         <Image
           source={FacebookSVG}
           resizeMode="contain"
@@ -29,7 +33,11 @@ const LoginScreen = () => {
         <Text style={styles.svgText}>Continua cu Facebook</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.TouchableOpacityStyle} onPress={loginViaGoogle}>
+      {/* Login with Google */}
+      <TouchableOpacity
+        style={styles.TouchableOpacityStyle}
+        onPress={loginViaGoogle}
+      >
         <Image
           source={GoogleSVG}
           resizeMode="contain"
@@ -38,7 +46,11 @@ const LoginScreen = () => {
         <Text style={styles.svgText}>Continua cu Google</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.TouchableOpacityStyle} onPress={loginViaApple}>
+      {/* Login with Apple */}
+      <TouchableOpacity
+        style={styles.TouchableOpacityStyle}
+        onPress={loginViaApple}
+      >
         <Image
           source={AppleSVG}
           resizeMode="contain"
@@ -53,10 +65,12 @@ const LoginScreen = () => {
 
       <View style={styles.lineStyle2} />
 
+      {/* Button to login with email */}
       <TouchableOpacity onPress={() => navigation.navigate("Login")}>
         <Button style={styles.button}>Conecteaza-te cu email</Button>
       </TouchableOpacity>
 
+      {/* Button to navigate to registration */}
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <Text style={styles.footerText}>Nu ai un cont?</Text>
         <Button

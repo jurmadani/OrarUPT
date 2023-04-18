@@ -17,16 +17,16 @@ import { Button } from "@ui-kitten/components/ui";
 import useAuth from "../hooks/useAuth";
 
 const ForgotPasswordScreen = () => {
-  const navigation = useNavigation();
-  const { changePassword } = useAuth();
-  const [email, setEmail] = useState("");
-  const EmailIcon = () => <Icon name="mail" size={25} color="black" />;
+  const navigation = useNavigation(); // Importing and using the useNavigation hook from react-navigation for navigation
+  const { changePassword } = useAuth(); // Importing and using the changePassword function from a custom useAuth hook for authentication
+  const [email, setEmail] = useState(""); // Setting up a state variable 'email' and a corresponding state update function 'setEmail' with an initial value of an empty string
+  const EmailIcon = () => <Icon name="mail" size={25} color="black" />; // Defining a custom icon component for email input field
 
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}> {/* Dismisses the keyboard when tapping outside of input fields */}
       <SafeAreaView style={styles.container}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon name="arrowleft" size={30} color="black" style={styles.icon} />
+        <TouchableOpacity onPress={() => navigation.goBack()}> {/* Navigates back to the previous screen when pressing the back arrow */}
+          <Icon name="arrowleft" size={30} color="black" style={styles.icon} /> {/* Displays a back arrow icon */}
         </TouchableOpacity>
         <View style={{ alignItems: "center", flex: 1 }}>
           <Text style={{ fontWeight: "bold", fontSize: 30, marginTop: 30 }}>
@@ -61,6 +61,7 @@ const ForgotPasswordScreen = () => {
     </TouchableWithoutFeedback>
   );
 };
+
 
 export default ForgotPasswordScreen;
 

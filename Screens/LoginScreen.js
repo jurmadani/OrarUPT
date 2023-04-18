@@ -9,7 +9,7 @@ import {
   KeyboardAvoidingView,
   Keyboard,
 } from "react-native";
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/AntDesign";
 import EntypoIcon from "react-native-vector-icons/Entypo";
@@ -23,8 +23,8 @@ import useAuth from "../hooks/useAuth";
 
 const LoginScreen = () => {
   const [secureTextEntry, setSecureTextEntry] = React.useState(true);
-  const [email, setEmail] = useState('')
-  const [password ,setPassword] = useState('')
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const toggleSecureEntry = () => {
     setSecureTextEntry(!secureTextEntry);
@@ -40,12 +40,12 @@ const LoginScreen = () => {
     </TouchableWithoutFeedback>
   );
   const navigation = useNavigation();
-  const {login } = useAuth();
-
+  const { login } = useAuth();
   return (
     <SafeAreaView style={styles.container}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Icon name="arrowleft" size={30} color="black" style={styles.icon} />
+        <Icon name="arrowleft" size={30} color="black" style={styles.icon} />{" "}
+        {/* Render a back button with an arrow icon */}
       </TouchableOpacity>
       <KeyboardAwareScrollView
         resetScrollToCoords={{ x: 0, y: 0 }}
@@ -53,9 +53,11 @@ const LoginScreen = () => {
         scrollEnabled={true}
       >
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          {" "}
+          {/* Dismiss the keyboard when tapping outside of the input fields */}
           <View style={styles.inner}>
             <Image
-              source={require("../assets/Images/AppIcon.png")}
+              source={require("../assets/Images/AppIcon.png")} // Render an image as the app icon
               style={styles.AppIconStyle}
             />
             <Text style={styles.headerText}>
@@ -63,13 +65,13 @@ const LoginScreen = () => {
             </Text>
             <View style={styles.TextInputView1}>
               <Input
-                value={email}
-                onChangeText={(text) =>{
-                  setEmail(text)
+                value={email} // Set the value of the email input field
+                onChangeText={(text) => {
+                  setEmail(text); // Update the email state with the typed text
                 }}
-                placeholder="Email"
+                placeholder="Email" // Placeholder text for the email input field
                 size="large"
-                accessoryLeft={EmailIcon}
+                accessoryLeft={EmailIcon} // Render an accessory icon on the left side of the email input field
                 textStyle={{ fontSize: 15 }}
                 style={{
                   width: 330,
@@ -80,15 +82,15 @@ const LoginScreen = () => {
             </View>
             <View style={styles.TextInputView2}>
               <Input
-                placeholder="Parola"
+                placeholder="Parola" // Placeholder text for the password input field
                 size="large"
-                value={password}
+                value={password} // Set the value of the password input field
                 onChangeText={(text) => {
-                  setPassword(text)
+                  setPassword(text); // Update the password state with the typed text
                 }}
-                accessoryRight={renderIcon}
-                accessoryLeft={PasswordIcon}
-                secureTextEntry={secureTextEntry}
+                accessoryRight={renderIcon} // Render an accessory icon on the right side of the password input field
+                accessoryLeft={PasswordIcon} // Render an accessory icon on the left side of the password input field
+                secureTextEntry={secureTextEntry} // Set the input field to be a password field with masked text
                 textStyle={{ fontSize: 15 }}
                 style={{
                   width: 330,
@@ -100,12 +102,21 @@ const LoginScreen = () => {
           </View>
         </TouchableWithoutFeedback>
       </KeyboardAwareScrollView>
-      <TouchableOpacity style={{ alignItems: "center" }} onPress={() => login(email,password)}>
-        <Button style={styles.button}>Conecteaza-te</Button>
+      <TouchableOpacity
+        style={{ alignItems: "center" }}
+        onPress={() => login(email, password)} // Call the login function with the email and password when the "Conecteaza-te" button is pressed
+      >
+        <Button style={styles.button}>Conecteaza-te</Button>{" "}
+        {/* Render a button with the text "Conecteaza-te" */}
       </TouchableOpacity>
 
-      <Button appearance="ghost" style={{ marginBottom: 120 }} onPress={() => navigation.navigate('ForgotPassword')}>
-        Ai uitat parola?
+      <Button
+        appearance="ghost"
+        style={{ marginBottom: 120 }}
+        onPress={() => navigation.navigate("ForgotPassword")} // Navigate to the "ForgotPassword" screen when the "Ai uitat parola?" button is pressed
+      >
+        Ai uitat parola?{" "}
+        {/* Render a button with the text "Ai uitat parola?" */}
       </Button>
     </SafeAreaView>
   );

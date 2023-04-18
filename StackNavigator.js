@@ -1,4 +1,7 @@
+// Import necessary modules from React Navigation
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+// Import screens from respective file paths
 import PreLoginScreen from "./Screens/PreLoginScreen";
 import OnBoardingScreen from "./Screens/OnBoardingScreen";
 import SplashScreen from "./Screens/SplashScreen";
@@ -15,89 +18,14 @@ import SplashScreen_v2 from "./Screens/SplashScreen_v2";
 import OnBoardingScreen_v2 from "./Screens/OnBoardingScreen_v2";
 import ForgotPasswordScreen from "./Screens/ForgotPasswordScreen";
 
+// Create a native stack navigator using createNativeStackNavigator
 const Stack = createNativeStackNavigator();
-/*
-<Stack.Screen
-        name="Splash"
-        component={SplashScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="Getting Started"
-        component={OnBoardingScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="PreLogin"
-        component={PreLoginScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="Login"
-        component={LoginScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
-         <Stack.Screen
-        name="Register"
-        component={RegisterByEmailScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
-       <Stack.Screen
-        name="Setting-Up Profile"
-        component={CreateProfileScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
-         <Stack.Screen
-        name="LoadingScreenAfterSetting-Up Profile"
-        component={LoadingScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="MainApp"
-        component={BottomTabNavigator}
-        options={{
-          headerShown: false,
-          gestureEnabled: false,
-        }}
-      />
-      <Stack.Screen
-        name="OrarLaboratorMaterie"
-        component={OrarLaboratorMaterieDinSearchScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen name="Despre" component={AboutScreen} />
-      <Stack.Screen
-        name="MaterieInformatieModal"
-        component={MaterieModalScreen}
-        options={{
-          presentation: "modal",
-          gestureEnabled: true,
-          headerShown: false,
-          headerTransparent: "true",
-          headerBlurEffect: true,
-        }}
-      />
-Stack screens order: Splash,GettingStarted, PreLogin, Reguister, Setting-Up Profile,LoadingScreenAfterSetting-Up Profile, MainApp,
-*/
+
+// Define the StackNavigator component
 const StackNavigator = () => {
   return (
     <Stack.Navigator>
+      {/* Define screens and their options */}
       <Stack.Screen
         name="Splash"
         component={SplashScreen_v2}
@@ -110,7 +38,7 @@ const StackNavigator = () => {
         component={OnBoardingScreen_v2}
         options={{
           headerShown: false,
-          gestureEnabled:false,
+          gestureEnabled: false,
         }}
       />
       <Stack.Screen
@@ -118,7 +46,7 @@ const StackNavigator = () => {
         component={PreLoginScreen}
         options={{
           headerShown: false,
-          gestureEnabled:false
+          gestureEnabled: false,
         }}
       />
       <Stack.Screen
@@ -135,21 +63,21 @@ const StackNavigator = () => {
           headerShown: false,
         }}
       />
-         <Stack.Screen
+      <Stack.Screen
         name="Register"
         component={RegisterByEmailScreen}
         options={{
           headerShown: false,
         }}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="Setting-Up Profile"
         component={CreateProfileScreen}
         options={{
           headerShown: false,
         }}
       />
-         <Stack.Screen
+      <Stack.Screen
         name="LoadingScreenAfterSetting-Up Profile"
         component={LoadingScreen}
         options={{
@@ -183,9 +111,9 @@ const StackNavigator = () => {
           headerBlurEffect: true,
         }}
       />
-     
     </Stack.Navigator>
   );
 };
 
+// Export the StackNavigator component as default
 export default StackNavigator;
