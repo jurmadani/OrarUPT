@@ -1,3 +1,8 @@
+AC-IS-Data.js
+firebase.js
+GoogleService-Info.plist
+google-services.json
+todo.txt
 node_modules/
 .expo/
 dist/
