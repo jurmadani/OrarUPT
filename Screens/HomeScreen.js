@@ -205,10 +205,12 @@ const HomeScreen = () => {
 
         {/* books image*/}
         <Image
-          source={require("../assets/Images/components-images/Books.png")}
+          source={require("../assets/Images/components-images/Books-3.png")}
           style={{
-            left: 310,
-            top: 265,
+            height:100,
+            width:100,
+            left:310,
+            top:268,
             position: "absolute",
             zIndex: 2, // Set zIndex to control the stacking order
           }}
