@@ -177,6 +177,8 @@ export const AuthProvider = ({ children }) => {
                 Alert.alert("Parola incorecta");
               } else if (errorCode === "auth/invalid-email") {
                 Alert.alert("Email invalid");
+              }else if(errorCode === "auth/user-not-found"){
+                Alert.alert("Email-ul nu exista")
               }
               console.log(errorCode);
             });
